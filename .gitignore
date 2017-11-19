@@ -1,0 +1,25 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+.metadata
+.buildpath
+multi_form_view/__pycache__
+FirmaEventos/__pycache__
+users/__pycache__
+utils/__pycache__
+eventos/__pycache__
+participantes/__pycache__
+FirmaEventos/settings.py
+multi_form_view/migrations
+users/migrations
+utils/migrations
+eventos/migrations
+participantes/migrations
+*.*.backup
+*.*~
+*.swp
+*.tar.gz
+*.pyc
+*.log
+*.pydevproject
+*.project
+*.planner
+*.tmp
