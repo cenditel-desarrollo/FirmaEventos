@@ -45,7 +45,7 @@ class FormularioLogin(forms.Form):
         self.fields['contrasena'].widget.attrs.update({'class': 'form-control',
         'placeholder': 'Contraseña'})
         self.fields['usuario'].widget.attrs.update({'class': 'form-control',
-        'placeholder': 'Username o Email'})
+        'placeholder': 'Nombre de Usuario'})
         self.fields['remember_me'].label = "Recordar"
         self.fields['remember_me'].widget = CheckboxInput()
         self.fields['remember_me'].required = False
@@ -65,7 +65,7 @@ class PasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'class': 'form-control',
-                                                  'placeholder': 'Email Address'})
+                                                  'placeholder': 'Dirección de Correo'})
 
     def clean(self):
         cleaned_data = super(PasswordResetForm, self).clean()
@@ -91,28 +91,4 @@ class SetPasswordForm(SetPasswordForm):
         self.fields['new_password2'].widget.attrs.update({'class': 'form-control',
                                                   'placeholder': 'Repite la nueva contraseña'})
 
-
-class FormularioUpdate(ModelForm):
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'groups',
-                  'is_staff', 'is_active']
-
-    def __init__(self, *args, **kwargs):
-        super(FormularioUpdate, self).__init__(*args, **kwargs)
-
-        self.fields['first_name'].widget.attrs.update({'class': 'form-control',
-        'placeholder': 'Nombres'})
-        self.fields['first_name'].required=True
-        self.fields['last_name'].widget.attrs.update({'class': 'form-control',
-        'placeholder': 'Apellidos'})
-        self.fields['last_name'].required=True
-        self.fields['email'].widget.attrs.update({'class': 'form-control',
-        'placeholder': 'Email'})
-        self.fields['email'].required=True
-        self.fields['is_staff'].label= 'Es Administrador?'
-        self.fields['is_staff'].widget.attrs.update({'class': 'form-control'})
-        self.fields['is_active'].label= 'Estara Activo?'
-        self.fields['is_active'].widget.attrs.update({'class': 'form-control', 'checked': 'checked'})
-        self.fields['groups'].widget.attrs.update({'class': 'form-control'})
 

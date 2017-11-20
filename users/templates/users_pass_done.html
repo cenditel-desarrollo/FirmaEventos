@@ -1,32 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base.template.html' %}
 {% load staticfiles %}
-{% block title %}'=Django-Password Recuperada='{% endblock title %}
-{% block extras_constantes %}
-{% endblock extras_constantes %}
-{% block extras_css %}
-<link rel="stylesheet" href="{% static 'css/custom_login.css' %}">
-<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-<link href="{% static 'css/font_varelaround.css'  %}" rel='stylesheet' type='text/css'>
-{% endblock extras_css %}
-{% block extras_js %}
-<script src="{% static 'js/jquery.validate.min.js' %}"></script>
-<script type="text/javascript">
-</script>
-{% endblock extras_js %}
-{% block contenido %}
-<!-- Where all the magic happens -->
-<!-- FORGOT PASSWORD FORM -->
-<div class="text-center" style="padding:50px 0">
-    <div class="logo">Recuperar contraseña</div>
-    <!-- Main Form -->
-    <div class="login-form-1">
-            <div class="etc-login-form">
-                <p>Tu contraseña ha sido definida. Ya puedes iniciar sesión de nuevo</p>  
-                    <p><a href="{% url 'users:login' %}">Iniciar sesión</a></p>  
-            </div>
-    </div>
-    <!-- end:Main Form -->
+{% block title %}Recuperar Contraseña{% endblock title %}
+{% block content %}
+<div class="center">
+    <h3>Recuperar Contraseña</h3><hr/>
+        <br/>
+        <p>Tu contraseña ha sido definida. Ya puedes iniciar sesión de nuevo.</p><br/>
+        <a href="{% url 'users:login' %}" class="btn waves-effect red darken-1">Iniciar sesión</a>
 </div>
-{% endblock contenido %}
-{% block custom_js%}
-{% endblock custom_js%}
+{% endblock %}

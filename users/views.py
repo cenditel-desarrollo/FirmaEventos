@@ -21,9 +21,7 @@ from django.contrib.auth.models import (
     Group, Permission, User
 )
 from django.contrib.auth.views import redirect_to_login
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin
-)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
@@ -37,18 +35,10 @@ from django.shortcuts import (
 )
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import (
-    FormView, UpdateView
-)
+from django.views.generic.edit import FormView
 from multi_form_view import MultiModelFormView
-
-from .forms import (
-    FormularioLogin, FormularioUpdate
-)
-
-from base.views import (
-    LoginRequeridoPerAuth
-)
+from .forms import FormularioLogin
+from base.views import LoginRequeridoPerAuth
 from base.messages import MENSAJES_LOGIN, MENSAJES_START
 
 class LoginView(FormView):
@@ -62,7 +52,7 @@ class LoginView(FormView):
     """
     form_class = FormularioLogin
     template_name = 'users_login.html'
-    success_url = '/inicio/'
+    success_url = reverse_lazy('base:inicio')
 
     def form_valid(self, form):
         """
@@ -71,27 +61,10 @@ class LoginView(FormView):
         """
         usuario = form.cleaned_data['usuario']
         contrasena = form.cleaned_data['contrasena']
-        try:
-            usuario = User.objects.get(email=usuario).username
-        except:
-            messages.error(self.request, 'No existe este correo: %s \
-                                          asociado a una cuenta' % (usuario))
+        
         usuario = authenticate(username=usuario, password=contrasena)
         if usuario is not None:
             login(self.request, usuario)
-            self.request.session['permisos'] = list(usuario.get_all_permissions())
-            try:
-                grupos = usuario.groups.all()
-                grupo = []
-                if len(grupos) > 1:
-                    for g in grupos:
-                        grupo += str(g),
-                else:
-                    grupo = str(usuario.groups.get())
-            except:
-                grupo = "No pertenece a un grupo"
-
-            self.request.session['grupos'] = grupo
 
             if self.request.POST.get('remember_me') is not None:
                 # Session expira a los dos meses si no se deslogea
