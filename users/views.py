@@ -21,9 +21,7 @@ from django.contrib.auth.models import (
     Group, Permission, User
 )
 from django.contrib.auth.views import redirect_to_login
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin
-)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
@@ -37,18 +35,10 @@ from django.shortcuts import (
 )
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import (
-    FormView, UpdateView
-)
+from django.views.generic.edit import FormView
 from multi_form_view import MultiModelFormView
-
-from .forms import (
-    FormularioLogin, FormularioUpdate
-)
-
-from base.views import (
-    LoginRequeridoPerAuth
-)
+from .forms import FormularioLogin
+from base.views import LoginRequeridoPerAuth
 from base.messages import MENSAJES_LOGIN, MENSAJES_START
 
 class LoginView(FormView):
@@ -62,7 +52,7 @@ class LoginView(FormView):
     """
     form_class = FormularioLogin
     template_name = 'users_login.html'
-    success_url = '/inicio/'
+    success_url = reverse_lazy('base:inicio')
 
     def form_valid(self, form):
         """

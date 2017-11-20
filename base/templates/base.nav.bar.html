@@ -5,7 +5,7 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="#!" class="dropdown-button" data-activates="dropdown1">Bienvenido <b>{{request.user.username}}</b> <i class="material-icons right">arrow_drop_down</i></a></li>
       <ul id='dropdown1' class='dropdown-content'>
-        <li><a href="{% url 'users:logout' %}">Logout</a></li>
+        <li><a href="{% url 'users:logout' %}">Salir</a></li>
       </ul>
     </ul>
     {% else %}

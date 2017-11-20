@@ -13,14 +13,13 @@ urlpatterns = [
     url(r'^logout/$', LogOutView.as_view(), name="logout"),
 
      # Reset password all users
-    url(r'^accounts/password/reset/$', password_reset,
-        {'post_reset_redirect': '/accounts/password/done/',
+    url(r'^password/reset/$', password_reset,
+        {'post_reset_redirect': '/password/done/',
          'template_name': 'users_forgot.html',
          'password_reset_form': PasswordResetForm},
         name="forgot"),
-    url(r'^accounts/password/done/$', password_reset_done,
+    url(r'^password/done/$', password_reset_done,
         {'template_name': 'users_pass_reset_done.html'},
         name='reset_done'),
 
-    # Urls Access Super Admin
 ]
