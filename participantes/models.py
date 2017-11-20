@@ -15,7 +15,7 @@ class Participante(models.Model):
     """
     nombres = models.CharField(max_length=128)
     apellidos = models.CharField(max_length=128)
-    pasaporte = models.IntegerField(unique=True)
+    pasaporte = models.CharField(max_length=20,unique=True)
     correo = models.EmailField(max_length=78, null=True)
 
     class Meta:
