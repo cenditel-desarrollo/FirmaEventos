@@ -6,7 +6,7 @@ class Evento(models.Model):
     Clase que contiene los eventos realizados
 
     @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 19-11-2017
     @version 1.0.0
     """

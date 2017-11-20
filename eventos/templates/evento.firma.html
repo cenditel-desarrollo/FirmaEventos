@@ -1,0 +1,21 @@
+{% extends 'base.template.html' %}
+{% load staticfiles %}
+{% block title %}Firmar Evento{% endblock title %}
+{% block content %}
+    <div class="content center">
+        <h3>{{nombre_evento}}</h3>
+        <form id="form" method="post">
+            {% csrf_token %}
+            <div class="input-field {% if form.pasaporte.errors %}invalid{% endif %}">
+                {{ form.pasaporte }}
+                <label for="icon_prefix {{ form.pasaporte.auto_id }}">Número de Pasaporte</label>
+                {% include 'base.forms.errors.html' with form_errors=form.pasaporte.errors col_title_error='col s2' col_msg_error='col s10' %}
+            </div>
+            
+            <a type="button" class="btn waves-effect red darken-1" onclick="get_event_user()">
+                <i class="material-icons left">search</i> Buscar
+            </a>
+            <div id="datos_paricipante"></div>
+        </form>
+    </div>
+{% endblock %}
