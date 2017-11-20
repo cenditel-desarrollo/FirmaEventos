@@ -5,12 +5,11 @@ from django.contrib.auth.views import (
     )
 
 from .forms import PasswordResetForm
-from .ajaxs import *
 from .views import *
 
 
 urlpatterns = [
-    url(r'^$', LoginView.as_view(), name="login"),
+    url(r'^login/$', LoginView.as_view(), name="login"),
     url(r'^logout/$', LogOutView.as_view(), name="logout"),
 
      # Reset password all users
@@ -24,12 +23,4 @@ urlpatterns = [
         name='reset_done'),
 
     # Urls Access Super Admin
-    url(r'^lista-usuarios/$', ListUsersView.as_view(), name="lista_users"),
-    url(r'^perfil/(?P<pk>\d+)/$', ModalsPerfil.as_view(),
-        name="modal_perfil"),
-    url(r'^registrar/$', RegisterView.as_view(), name="registrar"),
-
-    # Ajax list Users, for Super Admin
-    url(r'^listar-usuarios/$', ListUsersAjaxView.as_view(),
-        name="listar_users"),
 ]

@@ -1,8 +1,5 @@
 from django.db import models
 
-from utils.models import (
-    TipoDocumento
-    )
 from eventos.models import (
     Evento
     )
@@ -16,14 +13,13 @@ class Participante(models.Model):
     @date 19-11-2017
     @version 1.0.0
     """
-    tipo_documento = models.ForeignKey(TipoDocumento)
     nombres = models.CharField(max_length=128)
     apellidos = models.CharField(max_length=128)
-    identidad = models.IntegerField(unique=True)
+    pasaporte = models.IntegerField(unique=True)
     correo = models.EmailField(max_length=78, null=True)
 
     class Meta:
-        ordering = ('cedula',)
+        ordering = ('pasaporte',)
         verbose_name = 'Participante'
         verbose_name_plural = 'Participantes'
         db_table = 'participantes_participante'

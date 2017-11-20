@@ -36,6 +36,6 @@ urlpatterns = [
         name='password_reset_confirm'),
     url(r'^user/password/done/$', password_reset_complete,
         {'template_name': 'users_pass_done.html'}),
-    url(r'^', include('utils.urls', namespace="utils")),
+    url(r'^', include('base.urls', namespace="base")),
     url(r'^', include('users.urls', namespace="users")),
 ]
