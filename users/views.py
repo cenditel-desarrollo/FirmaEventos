@@ -61,27 +61,10 @@ class LoginView(FormView):
         """
         usuario = form.cleaned_data['usuario']
         contrasena = form.cleaned_data['contrasena']
-        try:
-            usuario = User.objects.get(email=usuario).username
-        except:
-            messages.error(self.request, 'No existe este correo: %s \
-                                          asociado a una cuenta' % (usuario))
+        
         usuario = authenticate(username=usuario, password=contrasena)
         if usuario is not None:
             login(self.request, usuario)
-            self.request.session['permisos'] = list(usuario.get_all_permissions())
-            try:
-                grupos = usuario.groups.all()
-                grupo = []
-                if len(grupos) > 1:
-                    for g in grupos:
-                        grupo += str(g),
-                else:
-                    grupo = str(usuario.groups.get())
-            except:
-                grupo = "No pertenece a un grupo"
-
-            self.request.session['grupos'] = grupo
 
             if self.request.POST.get('remember_me') is not None:
                 # Session expira a los dos meses si no se deslogea

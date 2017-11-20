@@ -12,13 +12,13 @@
             
             <div class="input-field {% if form.new_password1.errors %}invalid{% endif %}">
                 {{ form.new_password1 }}
-                <label for="{{ form.new_password1.auto_id }}">Correo</label>
+                <label for="{{ form.new_password1.auto_id }}">Nueva Contraseña</label>
                 {% include 'base.forms.errors.html' with form_errors=form.new_password1.errors col_title_error='col s2' col_msg_error='col s10' %}
             </div>
             
             <div class="input-field {% if form.new_password2.errors %}invalid{% endif %}">
                 {{ form.new_password2 }}
-                <label for="{{ form.new_password2.auto_id }}">Correo</label>
+                <label for="{{ form.new_password2.auto_id }}">Repita la Nueva Contraseña</label>
                 {% include 'base.forms.errors.html' with form_errors=form.new_password2.errors col_title_error='col s2' col_msg_error='col s10' %}
             </div>
             <button type="submit" class="btn waves-effect red darken-1">Cambiar</button>

@@ -45,7 +45,7 @@ class FormularioLogin(forms.Form):
         self.fields['contrasena'].widget.attrs.update({'class': 'form-control',
         'placeholder': 'Contraseña'})
         self.fields['usuario'].widget.attrs.update({'class': 'form-control',
-        'placeholder': 'Username o Email'})
+        'placeholder': 'Nombre de Usuario'})
         self.fields['remember_me'].label = "Recordar"
         self.fields['remember_me'].widget = CheckboxInput()
         self.fields['remember_me'].required = False

@@ -40,8 +40,8 @@
 }
 
 [type="checkbox"]:checked+label:before {
-    border-right: 2px solid #ff5722;
-    border-bottom: 2px solid #ff5722;
+    border-right: 2px solid #E53935;
+    border-bottom: 2px solid #E53935;
 }
 
 #tiny{
