@@ -7,4 +7,5 @@ urlpatterns = [
     # Urls Access Super Admin
     # Crear y asignar participantes a eventos
     url(r'^crear-eventos/$', RegisterEvent.as_view(), name='create_events'),
+    url(r'^lista-eventos/$', ListEvent.as_view(), name='list_events'),
 ]

@@ -1,0 +1,31 @@
+{% extends 'base.template.html' %}
+{% load staticfiles %}
+{% block title %}Eventos{% endblock %}
+{% block content %}
+    <h1 class="center">Eventos</h1><hr>
+    
+    {% for evento in object_list %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title"><b>Nombre del evento: </b>{{ evento.nombre_evento }}</span>
+                <ul>
+                    <li><b>Fecha: </b>{{ evento.fecha }}</li>
+                </ul>
+            </div>
+            <div class="card-action">
+                <a type="button" class="btn waves-effect red darken-1" href="">
+                    <i class="material-icons left">search</i> Detalle
+                </a>
+                <a type="button" class="btn waves-effect red darken-1" href="">
+                    <i class="material-icons left">mode_edit</i> Firmar
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <h3>No existen eventos.</h3>
+    {% endfor %}
+    {% include 'base.paginator.html' with paginator=page_obj %}
+    <div style="padding-bottom: 50px;">
+        <a type="button" class="btn waves-effect btn red darken-1" href="{% url 'base:inicio' %}">Regresar</a>
+    </div>
+{% endblock %}

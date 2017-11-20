@@ -5,6 +5,6 @@
 		<p>Si deseas ingresar como admin haz click en <b>Ingresar</b></p>
 		<a href="{% url 'users:login' %}" class="btn waves-effect btn red darken-1">Ingresar</a>
 		<p>Para ver el historial de eventos, haz click en <b>Eventos</b></p>
-		<a class="btn waves-effect btn red darken-1">Eventos</a>
+		<a href="{% url 'events:list_events' %}" class="btn waves-effect btn red darken-1">Eventos</a>
 	</div>
 {% endblock %}
