@@ -11,7 +11,7 @@ class Evento(models.Model):
     @version 1.0.0
     """
     nombre_evento = models.CharField(max_length=128, unique=True)
-    fechao = models.DateField(null=False)
+    fecha = models.DateField(null=False)
     serial = models.IntegerField(unique=True)
     activo = models.BooleanField(default=True)
 

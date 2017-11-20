@@ -1,1 +1,10 @@
 {% extends 'base.template.html' %}
+{% block content %}
+	<div class="center">
+		<h3>Bienvenido al Sistema de Firma de Documentos</h3><hr/>
+		<p>Si deseas ingresar como admin haz click </p>
+		<a href="{% url 'users:login' %}" class="btn waves-effect btn red darken-1">Aquí</a>
+		<p>Para ver el historial de eventos, haz click</p>
+		<a class="btn waves-effect btn red darken-1">Aquí</a>
+	</div>
+{% endblock %}
