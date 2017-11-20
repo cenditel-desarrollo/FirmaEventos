@@ -1,21 +1,18 @@
-<<<<<<< HEAD
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import (
     render, redirect, get_object_or_404
 )
-=======
-from django.shortcuts import render
 from django.views.generic import ListView, FormView
->>>>>>> def10d28a56c05436aa09889ff50481aaec4bc4a
+
 from multi_form_view import MultiModelFormView
-from django.views.generic import FormView
 
 from .forms import *
 from participantes.forms import (
     FormsetParticipanteEvento
 )
 from .models import Evento
+
 
 class RegisterEvent(FormView):
     """!
@@ -28,7 +25,6 @@ class RegisterEvent(FormView):
     """
 
     template_name = "register.event.html"
-<<<<<<< HEAD
     form_class = EventoForm
     form_participante = FormsetParticipanteEvento
     success_url = reverse_lazy('base:inicio')
@@ -57,13 +53,6 @@ class RegisterEvent(FormView):
             messages.error(self.request, "Existe un error en el Formualario %s" %
                          (str(self.form_class.errors, self.form_participante.errors)))
         return redirect(self.success_url)
-=======
-    form_classes = {
-      'event': EventoForm,
-      'participante': FormsetParticipanteEvento,
-    }
-    #success_url = reverse_lazy('users:home')
-    record_id=None
 
 
 class ListEvent(ListView):
@@ -104,4 +93,3 @@ class SignEvent(FormView):
         """
         kwargs['nombre_evento'] = Evento.objects.get(pk=int(self.kwargs['pk']))
         return super(SignEvent, self).get_context_data(**kwargs)
->>>>>>> def10d28a56c05436aa09889ff50481aaec4bc4a
