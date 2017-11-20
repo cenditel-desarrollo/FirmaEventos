@@ -38,4 +38,5 @@ urlpatterns = [
         {'template_name': 'users_pass_done.html'}),
     url(r'^', include('base.urls', namespace="base")),
     url(r'^', include('users.urls', namespace="users")),
+    url(r'^', include('eventos.urls', namespace="events")),
 ]

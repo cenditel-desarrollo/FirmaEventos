@@ -74,8 +74,6 @@ Para instalar la apliacacion en modo desarrollo debera seguir los siguientes pas
     Para migrar los modelos del proyecto se debe usar el siguiente comando:
 
     (FirmaEventos)$ python manage.py makemigrations
-    (FirmaEventos)$ python manage.py makemigrations users
-    (FirmaEventos)$ python manage.py makemigrations utils
     (FirmaEventos)$ python manage.py makemigrations eventos
     (FirmaEventos)$ python manage.py makemigrations participantes
     (FirmaEventos)$ python manage.py migrate

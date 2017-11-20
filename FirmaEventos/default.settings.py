@@ -43,7 +43,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'utils',
+    'base',
     'users',
     'eventos',
     'participantes',
@@ -65,21 +65,11 @@ ROOT_URLCONF = 'FirmaEventos.urls'
 
 #  Definir los Templates
 
-BASE_TEMPLATES = os.path.join(BASE_DIR, "templates")
-UTILS_TEMPLATES = os.path.join(BASE_DIR, "utils/templates")
-USERS_TEMPLATES = os.path.join(BASE_DIR, "users/templates")
-EVENTS_TEMPLATES = os.path.join(BASE_DIR, "eventos/templates")
-PARTIC_TEMPLATES = os.path.join(BASE_DIR, "participantes/templates")
-
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-                        BASE_TEMPLATES, UTILS_TEMPLATES,
-                        USERS_TEMPLATES, EVENTS_TEMPLATES,
-                        PARTIC_TEMPLATES
-                    ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

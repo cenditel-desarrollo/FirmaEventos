@@ -13,6 +13,8 @@ class EventoForm(forms.ModelForm):
     @date 19-11-2017
     @version 1.0.0
     """
+    archivo = forms.FileField(widget=forms.ClearableFileInput(
+                              attrs={'multiple': False}))
 
     class Meta:
         """!
@@ -30,8 +32,10 @@ class EventoForm(forms.ModelForm):
             {'class': 'form-control',
              'placeholder': 'Nombre del evento'})
         self.fields['fecha'].widget.attrs.update(
-            {'class': 'form-control',
-             'placeholder': 'Fecha', 'data-provide': 'datepicker'})
+            {'class': 'datepicker',
+             'placeholder': 'Fecha'})
         self.fields['serial'].widget.attrs.update(
-            {'class': 'form-control',
-             'placeholder': 'Serial'})
+            {'placeholder': 'Serial'})
+        self.fields['archivo'].widget.attrs.update(
+            {'class': 'file-path',
+             'placeholder': 'Subir Archivo'})

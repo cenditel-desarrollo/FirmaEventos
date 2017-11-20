@@ -75,4 +75,3 @@ class StartView(TemplateView):
     @return: El template inicial de la plataforma
     """
     template_name = "index.html"
-
