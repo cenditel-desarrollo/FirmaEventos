@@ -1,4 +1,6 @@
+import random 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import (
     render, redirect, get_object_or_404
@@ -12,10 +14,12 @@ from participantes.forms import (
     FormsetParticipanteEvento
 )
 from .models import Evento
-from participantes.models import Participante
+from participantes.models import (
+    Participante, ParticipanteEvento
+)
 
 
-class RegisterEvent(FormView):
+class RegisterEvent(LoginRequiredMixin, FormView):
     """!
     Muestra el formulario de registro de usuarios
 
@@ -41,11 +45,28 @@ class RegisterEvent(FormView):
     def post(self, request, *args, **kwargs):
         nuevo_evento = self.form_class(request.POST).save(commit=False)
         nuevo_participante = self.form_participante(request.POST)
-        consulta_api = 1
+        consulta_api = random.randrange(0, 500)
         if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
             nuevo_evento.serial = consulta_api
             nuevo_evento.save()
-            nuevo_participante.save()
+            #nuevo_participante.save()
+            # Control para guardar y asignar participante al evento
+            for form in nuevo_participante:
+                if form.cleaned_data.get('DELETE') and form.instance.pk:
+                    form.instance.delete()
+                else:
+                    instance = form.save(commit=False)
+                    parametros = {
+                                    'nombres': instance.nombres,
+                                    'apellidos': instance.apellidos,
+                                    'correo': instance.correo
+                                    }
+                    nuevo_participante, create= Participante.objects.update_or_create(pasaporte=instance.pasaporte, defaults=parametros)
+                    #instance.save()
+                    asigna_evento = ParticipanteEvento(fk_participante=nuevo_participante,
+                                                    fk_evento=nuevo_evento)
+                    print(asigna_evento.pk)
+                    asigna_evento.save()
             messages.success(self.request, "El usaurio %s, ha creado con exito,\
                                         un nuevo envento %s" %
                          (str(self.request.user),
