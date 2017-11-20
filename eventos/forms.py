@@ -16,9 +16,8 @@ class EventoForm(forms.ModelForm):
     @date 19-11-2017
     @version 1.0.0
     """
-    #archivo = forms.FileField(widget=forms.ClearableFileInput(
-                              #attrs={'multiple': False}))
     archivo = CharField()
+
     class Meta:
         """!
             Clase que construye los meta datos del formulario
@@ -41,12 +40,7 @@ class EventoForm(forms.ModelForm):
              'readonly'})
         self.fields['archivo'].required=True
         self.fields['archivo'].widget.attrs.update(
-<<<<<<< HEAD
-            {
-            'class': 'file-path validate',
-            'placeholder': 'Subur un archivo'})
-=======
-            {'class': 'file-path',
+            {'class': 'file-path validate',
              'placeholder': 'Subir Archivo'})
 
 class FirmaEventoForm(forms.Form):
@@ -60,4 +54,3 @@ class FirmaEventoForm(forms.Form):
     """
     
     pasaporte = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Ingrese su pasaporte'}))
->>>>>>> def10d28a56c05436aa09889ff50481aaec4bc4a
