@@ -1,5 +1,8 @@
 
 from django import forms
+from django.forms.fields import (
+    CharField, BooleanField
+)
 
 from .models import *
 
@@ -13,9 +16,9 @@ class EventoForm(forms.ModelForm):
     @date 19-11-2017
     @version 1.0.0
     """
-    archivo = forms.FileField(widget=forms.ClearableFileInput(
-                              attrs={'multiple': False}))
-
+    #archivo = forms.FileField(widget=forms.ClearableFileInput(
+                              #attrs={'multiple': False}))
+    archivo = CharField()
     class Meta:
         """!
             Clase que construye los meta datos del formulario
@@ -33,8 +36,11 @@ class EventoForm(forms.ModelForm):
              'placeholder': 'Nombre del evento'})
         self.fields['fecha'].widget.attrs.update(
             {'class': 'datepicker',
-             'placeholder': 'Fecha'})
+             'placeholder': 'Fecha',
+             'readonly':
+             'readonly'})
         self.fields['archivo'].required=True
         self.fields['archivo'].widget.attrs.update(
-            {'class': 'file-path',
-             'placeholder': 'Subir Archivo'})
+            {
+            'class': 'file-path validate',
+            'placeholder': 'Subur un archivo'})

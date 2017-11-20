@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms import (
-       inlineformset_factory, modelform_factory
+       inlineformset_factory, modelform_factory, modelformset_factory, formset_factory
    )
 
 from eventos.models import (
@@ -25,7 +25,7 @@ class ParticiapanteForm(forms.ModelForm):
             Clase que construye los meta datos del formulario
         """
         model = Participante
-        fields=('nombres', 'apellidos', 'pasaporte', 'correo')
+        fields=['nombres', 'apellidos', 'pasaporte', 'correo']
 
     def __init__(self, *args, **kwargs):
             """!
@@ -89,3 +89,9 @@ FormsetParticipanteEvento = modelform_factory(
                                     form=ParticiapanteForm,
                                     fields=('nombres', 'apellidos',
                                             'pasaporte', 'correo'))
+
+FormsetParticipanteEvento = modelformset_factory(Participante, form=FormsetParticipanteEvento, fields=('nombres', 'apellidos',
+                                            'pasaporte', 'correo'),
+                                    extra=1)
+
+#FormsetParticipanteEvento= FormsetParticipanteEvento(queryset=Participante.objects.none())
