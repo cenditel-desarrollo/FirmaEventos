@@ -3,7 +3,7 @@
 Vista que controla los procesos de los usuarios
 
 @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-@copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+@copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
 @date 09-01-2017
 @version 1.0.0
 """
@@ -46,7 +46,7 @@ class LoginView(FormView):
     Muestra el formulario de ingreso a la aplicación 
 
     @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-01-2017
     @version 1.0.0
     """
@@ -89,7 +89,7 @@ class LogOutView(RedirectView):
     Salir de la apliacion
 
     @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-01-2017
     @version 1.0.0
     """

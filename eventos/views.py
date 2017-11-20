@@ -13,7 +13,7 @@ class RegisterEvent(MultiModelFormView):
     Muestra el formulario de registro de usuarios
 
     @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 20-11-2017
     @version 1.0.0
     """
@@ -31,7 +31,7 @@ class ListEvent(ListView):
     Muestra el listado de eventos
 
     @author Rodrigo Boet (rboet at cenditel.gob.ve)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 20-11-2017
     @version 1.0.0
     """
@@ -44,7 +44,7 @@ class SignEvent(FormView):
     Muestra el formulario para buscar y luego firmar documento
 
     @author Rodrigo Boet (rboet at cenditel.gob.ve)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 20-11-2017
     @version 1.0.0
     """

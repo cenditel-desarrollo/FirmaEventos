@@ -3,7 +3,7 @@
 Vista que construye los controladores para las utilidades de la plataforma
 
 @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-@copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+@copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
 @date 09-06-2017
 @version 1.0.0
 """
@@ -31,7 +31,7 @@ class LoginRequeridoPerAuth(LoginRequiredMixin, GroupRequiredMixin):
     Clase que construye el controlador para el login requerido, se sobreescribe el metodo dispatch
 
     @author Ing. Leonel Paolo Hernandez Macchiarulo  (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-06-2017
     @version 1.0.0
     """
@@ -69,7 +69,7 @@ class StartView(TemplateView):
     Muestra el inicio de la plataforma
 
     @author Ing. Leonel Paolo Hernandez Macchiarulo  (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-01-2017
     @version 1.0.0
     @return: El template inicial de la plataforma

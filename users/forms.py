@@ -3,7 +3,7 @@
 Modulo Forms  que construye los formularios para los templates  de la plataforma
 
 @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-@copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+@copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
 @date 09-06-2017
 @version 1.0.0
 """
@@ -27,7 +27,7 @@ class FormularioLogin(forms.Form):
     Clase que permite crear el formulario de ingreso a la aplicación
 
     @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-01-2017
     @version 1.0.0
     """
@@ -57,7 +57,7 @@ class PasswordResetForm(PasswordResetForm):
     Clase que permite sobrescribir el formulario para resetear la contraseña
 
     @author Ing. Leonel P. Hernandez M. (leonelphm at gmail.com)
-    @copyright <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU Public License versión 2 (GPLv2)</a>
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
     @date 09-01-2017
     @version 1.0.0
     """
