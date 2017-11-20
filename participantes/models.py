@@ -30,7 +30,7 @@ class Participante(models.Model):
 
         @return Devuelve el identificador de la opcion
         """
-        return str(self.cedula)+" | "+str(self.nombres)+" "+str(self.apellidos)
+        return str(self.pasaporte)+" | "+str(self.nombres)+" "+str(self.apellidos)
 
 
 class ParticipanteEvento(models.Model):

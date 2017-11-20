@@ -21,7 +21,7 @@ class EventoForm(forms.ModelForm):
             Clase que construye los meta datos del formulario
         """
         model = Evento
-        exclude = ['activo']
+        exclude = ['activo', 'serial']
 
     def __init__(self, *args, **kwargs):
         """!
@@ -34,8 +34,7 @@ class EventoForm(forms.ModelForm):
         self.fields['fecha'].widget.attrs.update(
             {'class': 'datepicker',
              'placeholder': 'Fecha'})
-        self.fields['serial'].widget.attrs.update(
-            {'placeholder': 'Serial'})
+        self.fields['archivo'].required=True
         self.fields['archivo'].widget.attrs.update(
             {'class': 'file-path',
              'placeholder': 'Subir Archivo'})

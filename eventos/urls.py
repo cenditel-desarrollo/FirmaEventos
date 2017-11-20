@@ -6,5 +6,5 @@ from .views import *
 urlpatterns = [
     # Urls Access Super Admin
     # Crear y asignar participantes a eventos
-    #url(r'^crear-eventos/$', password_reset, name='create_events'),
+    url(r'^crear-eventos/$', RegisterEvent.as_view(), name='create_events'),
 ]

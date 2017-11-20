@@ -1,12 +1,14 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms import (
-       inlineformset_factory,
+       inlineformset_factory, modelform_factory
    )
 
-from eventos.model import (
+from eventos.models import (
     Evento
     )
 from .models import *
+
 
 class ParticiapanteForm(forms.ModelForm):
     """!
@@ -23,28 +25,21 @@ class ParticiapanteForm(forms.ModelForm):
             Clase que construye los meta datos del formulario
         """
         model = Participante
-        fields = ('__all__')
+        fields=('nombres', 'apellidos', 'pasaporte', 'correo')
 
     def __init__(self, *args, **kwargs):
             """!
                 Funcion que construye los valores iniciales del formulario participante
             """
             super(ParticiapanteForm, self).__init__(*args, **kwargs)
-            self.fields['fk_evento'].widget.attrs.update(
-                    {'class': 'form-control'})
-            self.fields['fk_evento'].label = 'Evento en el que participa'
             self.fields['nombres'].widget.attrs.update(
-                    {'class': 'form-control',
-                     'placeholder': 'Nombres'})
+                    {'placeholder': 'Nombres'})
             self.fields['apellidos'].widget.attrs.update(
-                    {'class': 'form-control',
-                     'placeholder': 'Apellidos'})
-            self.fields['identidad'].widget.attrs.update(
-                    {'class': 'form-control',
-                     'placeholder': 'Pasaporte'})
+                    {'placeholder': 'Apellidos'})
+            self.fields['pasaporte'].widget.attrs.update(
+                    {'placeholder': 'Pasaporte'})
             self.fields['correo'].widget.attrs.update(
-                    {'class': 'form-control',
-                     'placeholder': 'Correo'})
+                    {'placeholder': 'Correo'})
 
 
 class AddPartEventForm(forms.ModelForm):
@@ -81,10 +76,16 @@ class AddPartEventForm(forms.ModelForm):
         self.fields['fk_participante'].label = 'Participante'
 
 
-FormsetObj = inlineformset_factory(
+FormsetEventPartici = inlineformset_factory(
                                     Evento, ParticipanteEvento,
                                     form=AddPartEventForm,
                                     fields=('fk_participante',),
                                     fk_name='fk_evento', min_num=1,
                                     extra=0, validate_min=True,
                                     can_delete=True)
+
+FormsetParticipanteEvento = modelform_factory(
+                                    Participante,
+                                    form=ParticiapanteForm,
+                                    fields=('nombres', 'apellidos',
+                                            'pasaporte', 'correo'))

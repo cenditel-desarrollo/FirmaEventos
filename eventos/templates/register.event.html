@@ -1,0 +1,36 @@
+{% extends 'base.template.html' %}
+{% load staticfiles %}
+{% block title %}Registrar Evento{% endblock title %}
+{% block content %}
+    <div class="content center">
+        <form id="form" method="post">
+            {% csrf_token %}
+            <div class="input-field {% if forms.event.nombre.errors %}invalid{% endif %}">
+                {{ forms.event.nombre }}
+                <label for="icon_prefix {{ forms.event.nombre.auto_id }}">Nombre</label>
+                {% include 'base.forms.errors.html' with form_errors=forms.event.nombre.errors col_title_error='col s2' col_msg_error='col s10' %}
+            </div>
+            
+            <div class="input-field {% if forms.event.fecha.errors %}invalid{% endif %}">
+                <i class="material-icons">perm_contact_calendar</i>
+                {{ forms.event.fecha }}
+                <label for="icon_prefix {{ forms.event.fecha.auto_id }}">Fecha</label>
+                {% include 'base.forms.errors.html' with form_errors=forms.event.fecha.errors col_title_error='col s2' col_msg_error='col s10' %}
+            </div>
+
+            <div class="file-field input-field {% if forms.event.archivo.errors %}invalid{% endif %}">
+                <i class="material-icons">attachment</i>
+                <div class="file-path-wrapper">
+                    {{ forms.event.archivo }}
+                </div>
+                <label for="icon_prefix {{ forms.event.archivo.auto_id }}">Archivo</label>
+                {% include 'base.forms.errors.html' with form_errors=forms.event.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
+            </div>
+            
+            <div>
+                <button type="submit" class="btn waves-effect red darken-1">Registrar</button>
+            </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
