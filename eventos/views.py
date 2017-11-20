@@ -50,3 +50,17 @@ class SignEvent(FormView):
     """
     form_class = FirmaEventoForm
     template_name = "evento.firma.html"
+    
+    def get_context_data(self, **kwargs):
+        """!
+        Metodo que permite cargar de nuevo valores en los datos de contexto de la vista
+    
+        @author Rodrigo Boet (rboet at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 20-11-2017
+        @param self <b>{object}</b> Objeto que instancia la clase
+        @param kwargs <b>{object}</b> Objeto que contiene los datos de contexto
+        @return Retorna los datos de contexto
+        """
+        kwargs['nombre_evento'] = Evento.objects.get(pk=int(self.kwargs['pk']))
+        return super(SignEvent, self).get_context_data(**kwargs)

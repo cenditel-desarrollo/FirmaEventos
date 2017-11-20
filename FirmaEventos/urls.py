@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^', include('base.urls', namespace="base")),
     url(r'^', include('users.urls', namespace="users")),
     url(r'^', include('eventos.urls', namespace="events")),
+    url(r'^', include('participantes.urls', namespace="participantes")),
 ]
