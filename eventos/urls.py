@@ -8,4 +8,5 @@ urlpatterns = [
     # Crear y asignar participantes a eventos
     url(r'^crear-eventos/$', RegisterEvent.as_view(), name='create_events'),
     url(r'^lista-eventos/$', ListEvent.as_view(), name='list_events'),
+    url(r'^firmar-evento/(?P<pk>\d+)$', SignEvent.as_view(), name='firma_events'),
 ]
