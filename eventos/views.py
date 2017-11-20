@@ -12,6 +12,7 @@ from participantes.forms import (
     FormsetParticipanteEvento
 )
 from .models import Evento
+from participantes.models import Participante
 
 
 class RegisterEvent(FormView):
@@ -34,7 +35,7 @@ class RegisterEvent(FormView):
         if 'form' not in context:
             context['form'] = self.form_class()
         if 'form2' not in context:
-            context['form2'] = self.form_participante
+            context['form2'] = self.form_participante(queryset=Participante.objects.none())
         return context
 
     def post(self, request, *args, **kwargs):

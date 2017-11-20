@@ -90,8 +90,9 @@ FormsetParticipanteEvento = modelform_factory(
                                     fields=('nombres', 'apellidos',
                                             'pasaporte', 'correo'))
 
-FormsetParticipanteEvento = modelformset_factory(Participante, form=FormsetParticipanteEvento, fields=('nombres', 'apellidos',
-                                            'pasaporte', 'correo'),
-                                    extra=1)
-
-#FormsetParticipanteEvento= FormsetParticipanteEvento(queryset=Participante.objects.none())
+FormsetParticipanteEvento = modelformset_factory(
+                            Participante,
+                            form=FormsetParticipanteEvento,
+                            fields=('nombres', 'apellidos',
+                                    'pasaporte', 'correo'),
+                            extra=1)
