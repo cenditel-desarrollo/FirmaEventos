@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 
 from .models import (
-    ParticipanteEvento
+    ParticipanteEvento, Participante
 )
 from eventos.models import (
     Evento
@@ -70,18 +70,38 @@ class AjaxParticipanteFirmaEvento(View):
         pasaporte = request.POST.get('pasoporte', None)
         if evento_id is not None and pasaporte is not None:
             if serial is not None:
-                update_evento = self.model.object.get(pk=evento_id)
-                update_evento.serial = serial
-                update_evento.save()
-                mensaje += 'Se actualizo el serial del evento \n'
-            update_parti_event = self.model_participante.object.get(
-                                pasaporte=pasaporte)
-            update_parti_event.firma = True
-            update_parti_event.save()
-            mensaje += 'Se actualizo la firma del participante %s, \
-            para el evento %s' % (update_parti_event.fk_participante.nombres,
-                                  update_parti_event.fk_evento.nombre_evento)
-            validate = True
+                try:
+                    update_evento = self.model.object.get(pk=evento_id)
+                    update_evento.serial = serial
+                    update_evento.save()
+                    mensaje += 'Se actualizo el serial del evento \n'
+                except Exception as e:
+                    print (e)
+                    validate = False
+                    mensaje += 'No existe el evento que desea actualizar \n'
+            try:
+                participante = Participante.object.get(pasaporte=pasaporte)
+            except Exception as e:
+                print (e)
+                validate = False
+                mensaje += 'El pasaporte no coincide con los\
+                            participantes que se ecuentran registrados \n'
+            try:
+                update_parti_event = self.model_participante.object.get(
+                                    fk_participante=participante.pk,
+                                    fk_evento=evento_id)
+                update_parti_event.firma = True
+                update_parti_event.save()
+                mensaje += 'Se actualizo la firma del participante %s, \
+                para el evento %s' % (update_parti_event.fk_participante.nombres,
+                                      update_parti_event.fk_evento.nombre_evento)
+                validate = True
+            except Exception as e:
+                print(e)
+                validate = False
+                mensaje += 'El evento no esta asociado al participante\
+                            o no se encuentra registrado\n'
+
         else:
             mensaje += 'Debes enviar al menos\
                         dos argumentos (evento_id, pasaporte)'
