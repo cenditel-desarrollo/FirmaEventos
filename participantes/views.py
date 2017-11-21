@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.generic import TemplateView
-from .models import ParticipanteEvento
+from django.views import View
 
-class ParticipanteEventoSearch(TemplateView):
+from .models import (
+    ParticipanteEvento
+)
+from eventos.models import (
+    Evento
+)
+
+class ParticipanteEventoSearch(View):
     """!
     Muestra si un participante esta registrado en un evento
 
@@ -12,12 +18,11 @@ class ParticipanteEventoSearch(TemplateView):
     @date 20-11-2017
     @version 1.0.0
     """
-    template_name = "inicio.html"
-        
+
     def get(self,request,pk,pasaporte):
         """!
         Metodo para antender la vista por GET
-    
+
         @author Rodrigo Boet (rboet at cenditel.gob.ve)
         @copyright GNU/GPLv3
         @date 20-11-2017
@@ -34,3 +39,53 @@ class ParticipanteEventoSearch(TemplateView):
             data = {'firmo':p.firma,'datos':{'nombres':p.fk_participante.nombres,'apellidos':p.fk_participante.apellidos,
                         'pasaporte':pasaporte,'correo':p.fk_participante.correo}}
         return JsonResponse(data,safe=False)
+
+
+class AjaxParticipanteFirmaEvento(View):
+    """!
+    Ajax para sincronizar la firma del participante
+
+    @author Leonel P. Hernandez M.  (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 21-11-2017
+    @version 1.0.0
+    """
+    model = Evento
+    model_participante = ParticipanteEvento
+
+    def post(self, request):
+        """!
+        Metodo para antender la vista por POST
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 21-11-2017
+        @return Retorna un Json con la respuesta
+        """
+        data = {}
+        validate = False
+        mensaje = ''
+        evento_id = request.POST.get('event_id', None)
+        serial = request.POST.get('serial', None)
+        pasaporte = request.POST.get('pasoporte', None)
+        if evento_id is not None and pasaporte is not None:
+            if serial is not None:
+                update_evento = self.model.object.get(pk=evento_id)
+                update_evento.serial = serial
+                update_evento.save()
+                mensaje += 'Se actualizo el serial del evento \n'
+            update_parti_event = self.model_participante.object.get(
+                                pasaporte=pasaporte)
+            update_parti_event.firma = True
+            update_parti_event.save()
+            mensaje += 'Se actualizo la firma del participante %s, \
+            para el evento %s' % (update_parti_event.fk_participante.nombres,
+                                  update_parti_event.fk_evento.nombre_evento)
+            validate = True
+        else:
+            mensaje += 'Debes enviar al menos\
+                        dos argumentos (evento_id, pasaporte)'
+            validate = False
+        data = {'validate': validate, 'mensaje': mensaje}
+
+        return JsonResponse(data, safe=False)
