@@ -18,7 +18,6 @@ sources/tmp/*.jpg
 sources/tmp/*.tmp
 sources/tmp/*.png
 sources/tmp/*.bmp
-sources/tmp/*.*~
 *.*.backup
 *.*~
 *.swp
