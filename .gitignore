@@ -13,11 +13,7 @@ users/migrations
 utils/migrations
 eventos/migrations
 participantes/migrations
-sources/tmp/*.pdf
-sources/tmp/*.jpg
-sources/tmp/*.tmp
-sources/tmp/*.png
-sources/tmp/*.bmp
+
 *.*.backup
 *.*~
 *.swp
