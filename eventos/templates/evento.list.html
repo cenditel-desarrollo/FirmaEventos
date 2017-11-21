@@ -6,7 +6,7 @@
     
     {% if request.user.is_authenticated %}
         <div class="row content">
-            <a type="button" class="btn waves-effect btn red darken-1 right" href="{% url 'events:create_events' %}">
+            <a type="button" class="btn waves-effect btn blue darken-1 right" href="{% url 'events:create_events' %}">
                 <i class="material-icons left">add_circle</i> Registrar Nuevo Evento</a>
         </div>
     {% endif %}
@@ -20,10 +20,10 @@
                 </ul>
             </div>
             <div class="card-action">
-                <a type="button" class="btn waves-effect red darken-1" href="">
+                <a type="button" class="btn waves-effect blue darken-1" href="">
                     <i class="material-icons left">search</i> Detalle
                 </a>
-                <a type="button" class="btn waves-effect red darken-1" href="{% url 'events:firma_events' evento.id %}">
+                <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:firma_events' evento.id %}">
                     <i class="material-icons left">mode_edit</i> Firmar
                 </a>
             </div>
@@ -33,6 +33,6 @@
     {% endfor %}
     {% include 'base.paginator.html' with paginator=page_obj %}
     <div style="padding-bottom: 50px;">
-        <a type="button" class="btn waves-effect btn red darken-1" href="{% url 'base:inicio' %}">Regresar</a>
+        <a type="button" class="btn waves-effect btn blue darken-1" href="{% url 'base:inicio' %}">Regresar</a>
     </div>
 {% endblock %}

@@ -36,12 +36,12 @@
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-    color: #E53935;
+    color: #1e88e5;
 }
 
 [type="checkbox"]:checked+label:before {
-    border-right: 2px solid #E53935;
-    border-bottom: 2px solid #E53935;
+    border-right: 2px solid #1e88e5;
+    border-bottom: 2px solid #1e88e5;
 }
 
 #tiny{
@@ -49,5 +49,5 @@
 }
 
 a{
-    color: #E53935;
+    color: #1e88e5;
 }

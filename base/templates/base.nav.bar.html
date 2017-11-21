@@ -1,4 +1,5 @@
-<nav class="red darken-1">
+{% load staticfiles %}
+<nav class="blue darken-1">
   <div class="nav-wrapper">
     <a class="brand-logo" href="{% url 'base:inicio' %}">Firma de Documentos</a>
     {% if request.user.is_authenticated %}
@@ -15,3 +16,4 @@
     {% endif %}
   </div>
 </nav>
+<img src="{% static 'img/prueba.jpg'%}">
