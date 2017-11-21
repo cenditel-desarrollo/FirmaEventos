@@ -1,9 +1,10 @@
-<nav class="red darken-1">
+{% load staticfiles %}
+<nav class="blue darken-1">
   <div class="nav-wrapper">
     <a class="brand-logo" href="{% url 'base:inicio' %}">Firma de Documentos</a>
     {% if request.user.is_authenticated %}
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="#!" class="dropdown-button" data-activates="dropdown1">Bienvenido <b>{{request.user.username}}</b> <i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a href="#!" class="dropdown-button" data-beloworigin="true" data-activates="dropdown1">Bienvenido <b>{{request.user.username}}</b> <i class="material-icons right">arrow_drop_down</i></a></li>
       <ul id='dropdown1' class='dropdown-content'>
         <li><a href="{% url 'users:logout' %}">Salir</a></li>
       </ul>
@@ -15,3 +16,4 @@
     {% endif %}
   </div>
 </nav>
+<img src="{% static 'img/head.png'%}">

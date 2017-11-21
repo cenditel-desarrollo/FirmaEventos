@@ -12,10 +12,16 @@
                 {% include 'base.forms.errors.html' with form_errors=form.pasaporte.errors col_title_error='col s2' col_msg_error='col s10' %}
             </div>
             
-            <a type="button" class="btn waves-effect red darken-1" onclick="get_event_user()">
+            <a type="button" class="btn waves-effect blue darken-1" onclick="get_event_user()">
                 <i class="material-icons left">search</i> Buscar
             </a>
             <div id="datos_paricipante"></div>
         </form>
     </div>
+{% endblock %}
+{% block extraJs %}
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/gitversion.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hwcrypto-legacy.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hwcrypto.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hex2base.js"  %}"></script> 
 {% endblock %}

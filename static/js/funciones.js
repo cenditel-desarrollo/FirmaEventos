@@ -52,7 +52,7 @@ function simple_modal(mensaje) {
             buttons:{
                 close:{
                     text:'cerrar',
-                    className:'red',
+                    className:'blue',
                 }
             }
         }
@@ -71,5 +71,9 @@ function construir_datos(data) {
     html += '<li class="collection-item"><b>Pasaporte: </b>'+data.pasaporte+'</li>';
     html += '<li class="collection-item"><b>Correo: </b>'+data.correo+'</li>';
     html += '</ul>';
+    html += '<iframe width="700px" height="600px" src="https://192.168.12.154:8443/Murachi/0.1/archivos/listadopdf/cbcd0924-bbfe-49dc-afc8-f32348f20350.pdf">';
+    html += '</iframe><br/>';
+    html += '<a type="button" class="btn waves-effect blue darken-1" onclick="ObtenerCertificadoFirmanteMultiples(\''+data.documento+'\')">';
+    html += '<i class="material-icons left">mode_edit</i> Firmar</a>';
     $('#datos_paricipante').html(html);
 }
