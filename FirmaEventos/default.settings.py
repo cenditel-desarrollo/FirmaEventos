@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'firma_eventos',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
         'ATOMIC_REQUESTS': True, # Crea transacciones en cada peticion de la vista
@@ -138,6 +138,8 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'sources/')
 MEDIA_URL = '/sources/'
 
+TMP = os.path.join(MEDIA_ROOT, 'tmp')
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -153,7 +155,7 @@ STATICFILES_DIRS = (
 
 # Configuración para el logeo de usuarios
 
-LOGIN_URL = "/"
+LOGIN_URL = "/login"
 
 LOGOUT_URL= "/logout"
 
