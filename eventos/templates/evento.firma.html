@@ -19,3 +19,9 @@
         </form>
     </div>
 {% endblock %}
+{% block extraJs %}
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/gitversion.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hwcrypto-legacy.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hwcrypto.js"  %}"></script>
+    <script type="text/javascript" src="{% static "plugins/hwcrypto/hex2base.js"  %}"></script> 
+{% endblock %}

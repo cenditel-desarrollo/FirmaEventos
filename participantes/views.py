@@ -32,5 +32,5 @@ class ParticipanteEventoSearch(TemplateView):
         if(participante):
             p = participante.get()
             data = {'firmo':p.firma,'datos':{'nombres':p.fk_participante.nombres,'apellidos':p.fk_participante.apellidos,
-                        'pasaporte':pasaporte,'correo':p.fk_participante.correo}}
+                        'pasaporte':pasaporte,'correo':p.fk_participante.correo,'documento':p.fk_evento.serial}}
         return JsonResponse(data,safe=False)
