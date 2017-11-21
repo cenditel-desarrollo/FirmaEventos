@@ -4,10 +4,12 @@
 {% block content %}
     <h1 class="center">Eventos</h1><hr>
     
-    <div class="row content">
-        <a type="button" class="btn waves-effect btn red darken-1 right" href="{% url 'events:create_events' %}">
-            <i class="material-icons left">add_circle</i> Registrar Nuevo Evento</a>
-    </div>
+    {% if request.user.is_authenticated %}
+        <div class="row content">
+            <a type="button" class="btn waves-effect btn red darken-1 right" href="{% url 'events:create_events' %}">
+                <i class="material-icons left">add_circle</i> Registrar Nuevo Evento</a>
+        </div>
+    {% endif %}
     
     {% for evento in object_list %}
         <div class="card">
