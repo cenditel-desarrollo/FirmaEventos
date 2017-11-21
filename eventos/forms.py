@@ -41,7 +41,8 @@ class EventoForm(forms.ModelForm):
         self.fields['archivo'].required=True
         self.fields['archivo'].widget.attrs.update(
             {'class': 'file-path validate',
-             'placeholder': 'Subir Archivo'})
+             'placeholder': 'Subir Archivo',
+             'accept': '.pdf'})
 
 class FirmaEventoForm(forms.Form):
     """!
@@ -52,5 +53,4 @@ class FirmaEventoForm(forms.Form):
     @date 20-11-2017
     @version 1.0.0
     """
-    
     pasaporte = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Ingrese su pasaporte'}))
