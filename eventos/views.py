@@ -58,15 +58,19 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         file =  request.FILES['file']
         handle_uploaded_file(request.FILES['file'], file)
         ruta = '%s/%s' % (settings.TMP, file)
-        files = {'file': open(ruta, 'rb')}
+        file = open(ruta, 'rb')
+        files = {'file': file}
         try:
             r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
             nuevo_participante = self.form_participante(request.POST)
             consulta_api = r.json()['fileId']
             # elimina el archivo si fue creado en la carpeta tmp
+            file.close()
             os.unlink(ruta)
         except Exception as e:
             print (e)
+            file.close()
+            os.unlink(ruta)
             messages.error(self.request, "Error al concetar al servidor y subir\
                                           el archivo a la api Murachi")
             return redirect(self.success_url)

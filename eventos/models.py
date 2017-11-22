@@ -12,7 +12,7 @@ class Evento(models.Model):
     """
     nombre_evento = models.CharField(max_length=128, unique=True)
     fecha = models.DateField(null=False)
-    serial = models.CharField(max_length=128, unique=True)
+    serial = models.CharField(max_length=128)
     activo = models.BooleanField(default=True)
 
     class Meta:
