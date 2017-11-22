@@ -112,3 +112,36 @@ class AjaxParticipanteFirmaEvento(View):
         data = {'validate': validate, 'mensaje': mensaje}
 
         return JsonResponse(data, safe=False)
+
+class ParticipantesRestantes(View):
+    """!
+    Muestra si el participante restante es el último
+
+    @author Rodrigo Boet  (rboet at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 22-11-2017
+    @version 1.0.0
+    """
+
+    def get(self,request,evento):
+        """!
+        Metodo para antender la vista por GET
+
+        @author Rodrigo Boet (rboet at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 22-11-2017
+        @param self <b>{object}</b> Objeto que instancia la clase
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @param evento <b>{int}</b> Recibe el id del evento
+        @return Retorna un Json con la respuesta
+        """
+        participante_evento = ParticipanteEvento.objects.select_related().filter(fk_evento=evento)
+        falta_porfirma = participante_evento.filter(firma=False).count()
+        data = {}
+        if(falta_porfirma==1):
+            evento = Evento.objects.get(pk=evento)
+            data = {'valid':True,'data':{'posX':evento.pos_x,'posY':evento.pos_y,'page':evento.pag}}
+        else:
+            data = {'valid':False}
+
+        return JsonResponse(data, safe=False)
