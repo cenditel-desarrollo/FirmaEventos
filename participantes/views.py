@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import (
     ParticipanteEvento, Participante
@@ -40,7 +42,7 @@ class ParticipanteEventoSearch(View):
                         'pasaporte':pasaporte,'correo':p.fk_participante.correo,'documento':p.fk_evento.serial}}
         return JsonResponse(data,safe=False)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class AjaxParticipanteFirmaEvento(View):
     """!
     Ajax para sincronizar la firma del participante
@@ -68,10 +70,11 @@ class AjaxParticipanteFirmaEvento(View):
         evento_id = request.POST.get('event_id', None)
         serial = request.POST.get('serial', None)
         pasaporte = request.POST.get('pasaporte', None)
+        pasaporte = request.POST.get('pasaporte', None)
         if evento_id is not None and pasaporte is not None:
             if serial is not None:
                 try:
-                    update_evento = self.model.object.get(pk=evento_id)
+                    update_evento = self.model.objects.get(pk=evento_id)
                     update_evento.serial = serial
                     update_evento.save()
                     mensaje += 'Se actualizo el serial del evento \n'
@@ -80,14 +83,14 @@ class AjaxParticipanteFirmaEvento(View):
                     validate = False
                     mensaje += 'No existe el evento que desea actualizar \n'
             try:
-                participante = Participante.object.get(pasaporte=pasaporte)
+                participante = Participante.objects.get(pasaporte=pasaporte)
             except Exception as e:
                 print (e)
                 validate = False
                 mensaje += 'El pasaporte no coincide con los\
                             participantes que se ecuentran registrados \n'
             try:
-                update_parti_event = self.model_participante.object.get(
+                update_parti_event = self.model_participante.objects.get(
                                     fk_participante=participante.pk,
                                     fk_evento=evento_id)
                 update_parti_event.firma = True
