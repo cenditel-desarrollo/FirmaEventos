@@ -160,7 +160,7 @@ function ObtenerHashPDFServerMultiples(parameters,cert){
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',				
-		url:"https://192.168.12.154:8443/Murachi/0.1/archivos/pdfs2",
+		url:"https://192.168.12.154:8443/Murachi/0.1/archivos/pdfsqr",
 		//url:"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/pdfs",
         //url: "https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados/pdfs",
 		dataType: "json",
