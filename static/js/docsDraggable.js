@@ -122,7 +122,7 @@ $("#file").on('change', function() {
   }
   else{
 
-    $('#myJson_wrapper').hide();
+    $("#texto").hide();
     $('#firmar-documento').show();
   }
 

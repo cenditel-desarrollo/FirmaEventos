@@ -10,13 +10,14 @@ function InicializarObjectoPositicion(){
   };
 
   // initialize drag
+  $("#texto").hide();
   new Draggable(element, options); 
 
 }
 
 
 function NuevoObjectoInicial(){
-
+  $("#texto").hide();
   var num = 0;
   $( ".text" ).draggable({ 
     containment: '#container1',
