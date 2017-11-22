@@ -90,43 +90,63 @@ function construir_datos(data) {
  * @param fileId Recibe el id del documento
 */
 function ObtenerCertificadoFirmanteMultiples(fileId){
-
-	// identificador del archivo en el servidor
-	window.hwcrypto.getCertificate({lang: "en"}).then(
-		function(response) {
-	  		var cert = response;
-	  		var parameters = "";
-			parameters = JSON.stringify({
-				"fileId":fileId,
-				"certificate":cert.hex,
-				"reason":"Certificado",
-				"location":"RedGealc",
-				"contact":"RedGealc",
-				"signatureVisible":"false",
-				"signaturePage": "",
-				"xPos": "",
-				"yPos": ""
-				});				
-
-			// ahora llamar al ajax de obtener la resena del pdf
-			ObtenerHashPDFServerMultiples(parameters, cert);	
-
-		}, 
-		function(err) {
-            var error;
-            if(err == "Error: user_cancel") {
-                error = "El usuario cancelo la operación"; 
-             }      
-             else if(err == "Error: no_certificates") {
-                 error = "No hay certificado disponible";
-             }
-             else if(err == "Error: no_implementation") {
-                 error = "No hay soporte para el manejo del certificado";
-			}
-            simple_modal(error);
+    var xPos = yPos= signaturePage = "";
+    var lastSignature = false;
+    var routes = $(location).attr('pathname').split('/');
+    var pk = routes[routes.length-1];
+    
+    $.ajax({
+		type: 'GET',
+        async: false,
+		url:URL_ULTIMO_FIRMANTE+pk,
+		success: function(datos){
+            if (datos.valid==true) {
+                xPos = datos.data.posX;
+                yPos = datos.data.posY;
+                signaturePage = datos.data.page;
+                lastSignature = true;
+            }
+            window.hwcrypto.getCertificate({lang: "en"}).then(
+                function(response) {
+                    var cert = response;
+                    var parameters = "";
+                    parameters = JSON.stringify({
+                        "fileId":fileId,
+                        "certificate":cert.hex,
+                        "reason":"Certificado",
+                        "location":"RedGealc",
+                        "contact":"RedGealc",
+                        "signatureVisible":"false",
+                        "signaturePage": signaturePage,
+                        "xPos": xPos,
+                        "yPos": yPos,
+                        "lastSignature":lastSignature
+                        });				
+        
+                    // ahora llamar al ajax de obtener la resena del pdf
+                    ObtenerHashPDFServerMultiples(parameters, cert);	
+        
+                }, 
+                function(err) {
+                    var error;
+                    if(err == "Error: user_cancel") {
+                        error = "El usuario cancelo la operación"; 
+                     }      
+                     else if(err == "Error: no_certificates") {
+                         error = "No hay certificado disponible";
+                     }
+                     else if(err == "Error: no_implementation") {
+                         error = "No hay soporte para el manejo del certificado";
+                    }
+                    simple_modal(error);
+                }
+        
+            );
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log('error: ' + textStatus);
 		}
-
-	);
+	});
 }
 
 
