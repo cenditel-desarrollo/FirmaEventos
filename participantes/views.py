@@ -67,7 +67,7 @@ class AjaxParticipanteFirmaEvento(View):
         mensaje = ''
         evento_id = request.POST.get('event_id', None)
         serial = request.POST.get('serial', None)
-        pasaporte = request.POST.get('pasoporte', None)
+        pasaporte = request.POST.get('pasaporte', None)
         if evento_id is not None and pasaporte is not None:
             if serial is not None:
                 try:

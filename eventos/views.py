@@ -11,7 +11,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import (
     redirect
 )
-from django.views.generic import ListView, FormView
+from django.views.generic import (
+    ListView, FormView
+)
+from django.views.generic.detail import DetailView
 
 from multi_form_view import MultiModelFormView
 
@@ -61,7 +64,8 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         file = open(ruta, 'rb')
         files = {'file': file}
         try:
-            r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+            #r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+            r = requests.post('https://192.168.12.154:8443/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
             nuevo_participante = self.form_participante(request.POST)
             consulta_api = r.json()['fileId']
             # elimina el archivo si fue creado en la carpeta tmp
@@ -149,3 +153,30 @@ class SignEvent(FormView):
         """
         kwargs['nombre_evento'] = Evento.objects.get(pk=int(self.kwargs['pk']))
         return super(SignEvent, self).get_context_data(**kwargs)
+
+
+class DetailEvent(DetailView):
+    """!
+    Muestra el detalle del evento
+
+    @author Rodrigo Boet (rboet at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 20-11-2017
+    @version 1.0.0
+    """
+    model = Evento
+    template_name = "evento.detail.html"
+
+    def get_context_data(self, **kwargs):
+        evento = int(self.kwargs['pk'])
+        context = super(DetailEvent, self).get_context_data(**kwargs)
+        try:
+            participante_evento = ParticipanteEvento.objects.select_related().filter(fk_evento=evento)
+            falta_porfirma = participante_evento.filter(firma=False).count()
+        except Exception as e:
+            print(e)
+            participante_evento = None
+            falta_porfirma = None
+        context['participantes'] = participante_evento
+        context['num_firma'] = falta_porfirma
+        return context
