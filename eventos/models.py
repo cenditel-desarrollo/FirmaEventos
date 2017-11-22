@@ -15,6 +15,7 @@ class Evento(models.Model):
     serial = models.CharField(max_length=128)
     pos_x = models.CharField(max_length=32)
     pos_y = models.CharField(max_length=32)
+    pag = models.CharField(max_length=4)
     activo = models.BooleanField(default=True)
 
     class Meta:

@@ -45,6 +45,7 @@ class EventoForm(forms.ModelForm):
              'accept': '.pdf'})
         self.fields['pos_x'].widget = forms.HiddenInput()
         self.fields['pos_y'].widget = forms.HiddenInput()
+        self.fields['pag'].widget = forms.HiddenInput()
 
 class FirmaEventoForm(forms.Form):
     """!

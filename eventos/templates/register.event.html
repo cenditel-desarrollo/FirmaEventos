@@ -2,7 +2,14 @@
 {% load staticfiles %}
 {% block title %}Registrar Evento{% endblock title %}
 {% block extraJs %}
-    <script src="{% static "js/formset.js" %}"></script>
+    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/formset.js' %}"></script>
+    <script src="{% static 'js/pdf.js' %}"></script>
+    <script src="{% static 'js/pdf.worker.js' %}"></script>
+    <script src="{% static 'js/draggable.js' %}"></script>
+    <!-- Coordenadas PDF-->
+    <script src="{% static 'js/DraggableSortable.js' %}"></script>
+    <script src="{% static 'js/docsDraggable.js' %}"></script>
     <script type="text/javascript">
     $(function() {
         $('#id_orders_table tbody tr').formset({
@@ -77,7 +84,33 @@
                     {{ form.archivo }}
                 </div>
                 {% include 'base.forms.errors.html' with form_errors=form.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
+                
             </div>
+            <div id="pdf-main-container" style="display:none;"><center><h5>Configurar Posicion de la Firma</h5></center> 
+                  <div id="pdf-loader2">Cargando documento ...</div>
+                  <div id="pdf-contents2">
+                    <div id="pdf-meta2">
+                      <div id="pdf-buttons2">
+                        <button type="button" id="pdf-prev2" class="btn btn-default btn-sm">
+                          <span class="glyphicon glyphicon-step-backward"></span> 
+                        </button>
+                        <button type="button" id="pdf-next2" class="btn btn-default btn-sm">
+                          <span class="glyphicon glyphicon-step-forward"></span> 
+                        </button>                                
+                      </div>
+                      <div id="page-count-container">Página <div id="pdf-current-page2"></div> de <div id="pdf-total-pages2"></div></div>
+                    </div>
+                    <div class="overflow" >
+                      <div id="container1" class=".cropper-hidden">
+                        <!--<div class="ball blue">sdsa</div>-->
+                      </div>
+                      <br>
+                      <br>
+                    </div>          
+                    </div>
+                    <canvas id="pdf-canvas2" width="500"></canvas>
+                    <div id="page-loader2">Cargando página ...</div>
+              </div>
             <h5>Datos de los Participantes</h5><hr/><br>
             <table class="striped" id="id_orders_table">
                 <thead>
