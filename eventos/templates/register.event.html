@@ -57,7 +57,8 @@
 {%endblock%}
 
 {% block content %}
-    <div class="content center">
+    <div class="content">
+      <div class="center">
         <h5>Datos del Evento</h5><hr/><br>
         <form id="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -78,7 +79,7 @@
                 
                 <div class="btn">
                 <span for="icon_prefix {{ form.archivo.auto_id }}">Archivo</span>
-                    <input type="file" name="file" id="file" accept=".pdf">
+                    <input type="file" name="file" id="file" accept="application/pdf">
                 </div>
                 <div class="file-path-wrapper">
                     {{ form.archivo }}
@@ -86,20 +87,19 @@
                 {% include 'base.forms.errors.html' with form_errors=form.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
                 
             </div>
+          </div>
+            <div class="col s8 m2 offset-s2">
             <div id="pdf-main-container" style="display:none;"><center><h5>Configurar Posicion de la Firma</h5></center> 
                   <div id="pdf-loader2">Cargando documento ...</div>
                   <div id="pdf-contents2">
                     <div id="pdf-meta2">
                       <div id="pdf-buttons2">
-                        <button type="button" id="pdf-prev2" class="btn btn-default btn-sm">
-                          <span class="glyphicon glyphicon-step-backward"></span> 
-                        </button>
-                        <button type="button" id="pdf-next2" class="btn btn-default btn-sm">
-                          <span class="glyphicon glyphicon-step-forward"></span> 
-                        </button>                                
+                        <a class="waves-effect waves-light btn" id="pdf-prev2"><i class="material-icons">keyboard_arrow_left</i></a>
+                        <a class="waves-effect waves-light btn" id="pdf-next2"><i class="material-icons">keyboard_arrow_right</i></a>
                       </div>
                       <div id="page-count-container">Página <div id="pdf-current-page2"></div> de <div id="pdf-total-pages2"></div></div>
                     </div>
+                    <img class="text" src="{% static 'img/QRCode.png' %}" id="texto"/>
                     <div class="overflow" >
                       <div id="container1" class=".cropper-hidden">
                         <!--<div class="ball blue">sdsa</div>-->
@@ -111,6 +111,8 @@
                     <canvas id="pdf-canvas2" width="500"></canvas>
                     <div id="page-loader2">Cargando página ...</div>
               </div>
+            </div>
+            <div class="center">
             <h5>Datos de los Participantes</h5><hr/><br>
             <table class="striped" id="id_orders_table">
                 <thead>
@@ -143,7 +145,11 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <div>
+            </div>
+            <div class="center">
+                {{ form.pos_x }}
+                {{ form.pos_y }}
+                {{ form.pag }}
                 <button type="submit" class="btn waves-effect blue darken-1">Registrar</button>
             </div>
             </div>

@@ -33,8 +33,11 @@ function NuevoObjectoInicial(){
         }else{
           VALOR_X = parseInt(ui.position['left']);
           VALOR_Y = parseInt(ui.position['top']);
+          console.log(VALOR_X, VALOR_Y)
         }
-        
+        $('#id_pos_x').val(VALOR_X)
+        $('#id_pos_y').val(VALOR_Y)
+        $('#id_pag').val(__CURRENT_PAGE)
       },
     
   });

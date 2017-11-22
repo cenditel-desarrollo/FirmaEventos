@@ -109,7 +109,7 @@ $("#file").on('click', function() {
 $("#file").on('change', function() {
 
   // Validate whether PDF
-  if(['application/pdf'].indexOf($("#file-sign-ft_Vble").get(0).files[0].type) == -1) {
+  if(['application/pdf'].indexOf($("#file").get(0).files[0].type) == -1) {
       alert('Error : Not a PDF');
       return;
   }
@@ -127,7 +127,7 @@ $("#file").on('change', function() {
   }
 
   // Send the object url of the pdf
-  showPDF2(URL.createObjectURL($("#file-sign-ft_Vble").get(0).files[0]));
+  showPDF2(URL.createObjectURL($("#file").get(0).files[0]));
 
 
 
