@@ -20,7 +20,7 @@
                 </ul>
             </div>
             <div class="card-action">
-                <a type="button" class="btn waves-effect blue darken-1" href="">
+                <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:detail_event' evento.id %}">
                     <i class="material-icons left">search</i> Detalle
                 </a>
                 <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:firma_events' evento.id %}">
