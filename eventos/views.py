@@ -57,7 +57,6 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
         file =  request.FILES['file']
         handle_uploaded_file(request.FILES['file'], file)
         ruta = '%s/%s' % (settings.TMP, file)
@@ -80,6 +79,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
             return redirect(self.success_url)
         try:
             if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
+                nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
                 nuevo_evento.serial = consulta_api
                 nuevo_evento.save()
                 # Control para guardar y asignar participantes al evento

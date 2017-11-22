@@ -100,6 +100,7 @@ function showPage2(page_no) {
 $("#file").on('click', function() {
   
   $("#pdf-main-container").show();
+  $("#texto").show();
   CONTAINER = true;
   $("#file").trigger('click');
 

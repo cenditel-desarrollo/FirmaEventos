@@ -95,4 +95,5 @@ FormsetParticipanteEvento = modelformset_factory(
                             form=FormsetParticipanteEvento,
                             fields=('nombres', 'apellidos',
                                     'pasaporte', 'correo'),
-                            extra=1)
+                            extra=1, validate_min=True,
+                            can_delete=True)
