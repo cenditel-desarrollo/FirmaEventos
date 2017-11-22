@@ -43,6 +43,8 @@ class EventoForm(forms.ModelForm):
             {'class': 'file-path validate',
              'placeholder': 'Subir Archivo',
              'accept': '.pdf'})
+        self.fields['pos_x'].widget = forms.HiddenInput()
+        self.fields['pos_y'].widget = forms.HiddenInput()
 
 class FirmaEventoForm(forms.Form):
     """!
