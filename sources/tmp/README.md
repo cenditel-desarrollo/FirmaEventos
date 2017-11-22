@@ -1,0 +1,1 @@
+En este directorio se generan archivos temporales del servidor, los cuales son cargados como recursos para el soporte del evento.
