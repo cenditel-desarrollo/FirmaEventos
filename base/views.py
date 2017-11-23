@@ -11,8 +11,6 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.shortcuts import render
-from dal import autocomplete
-from braces.views import GroupRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth.mixins import (
@@ -26,7 +24,7 @@ from .models import *
 from .messages import MENSAJES_LOGIN
 
 
-class LoginRequeridoPerAuth(LoginRequiredMixin, GroupRequiredMixin):
+class LoginRequeridoPerAuth(LoginRequiredMixin):
     """!
     Clase que construye el controlador para el login requerido, se sobreescribe el metodo dispatch
 
