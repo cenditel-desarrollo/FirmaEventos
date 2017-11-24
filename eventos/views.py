@@ -63,8 +63,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         file = open(ruta, 'rb')
         files = {'file': file}
         try:
-            #r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
-            r = requests.post('https://192.168.12.154:8443/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+            r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
             nuevo_participante = self.form_participante(request.POST)
             consulta_api = r.json()['fileId']
             # elimina el archivo si fue creado en la carpeta tmp
