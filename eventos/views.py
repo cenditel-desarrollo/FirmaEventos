@@ -251,3 +251,20 @@ class EventoProcesado(View):
                 print(e)
                 validado = False
         return JsonResponse(validado, safe=False)
+
+
+class UpdateFileEvent(FormView):
+    """!
+    Clase que permite actualizar subir un archivo a un evento que no se haya cargado
+
+    @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 27-11-2017
+    @version 1.0.0
+    """
+    model = Evento
+    form_class = UpdateFileEventoForm
+    template_name = 'evento.update.html'
+
+    def form_valid(self, form, request):
+        print(request)

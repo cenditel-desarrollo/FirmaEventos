@@ -1,0 +1,68 @@
+{% extends 'base.template.html' %}
+{% load staticfiles %}
+{% block title %}Cargar Archivo{% endblock title %}
+{% block extraJs %}
+    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/pdf.js' %}"></script>
+    <script src="{% static 'js/pdf.worker.js' %}"></script>
+    <script src="{% static 'js/draggable.js' %}"></script>
+    <!-- Coordenadas PDF-->
+    <script src="{% static 'js/DraggableSortable.js' %}"></script>
+    <script src="{% static 'js/docsDraggable.js' %}"></script>
+    
+{%endblock%}
+
+{% block content %}
+    <div class="content">
+        <h5 class="center">Cargar Archivo al Evento</h5><hr/><br>
+        <form id="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="file-field input-field {% if form.archivo.errors %}invalid{% endif %}">
+                
+                <div class="btn">
+                <span for="icon_prefix {{ form.archivo.auto_id }}">Archivo</span>
+                    <input type="file" name="file" id="file" accept="application/pdf">
+                </div>
+                <div class="file-path-wrapper">
+                    {{ form.archivo }}
+                </div>
+                {% include 'base.forms.errors.html' with form_errors=form.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
+                
+            </div>
+            </div>
+            <div class="col s8 m2 offset-s2">
+            <div id="pdf-main-container" style="display:none;"><center><h5>Configurar Posicion de la Firma</h5></center> 
+                  <div id="pdf-loader2">Cargando documento ...</div>
+                  <div id="pdf-contents2">
+                    <div id="pdf-meta2">
+                      <div id="pdf-buttons2">
+                        <a class="waves-effect waves-light btn" id="pdf-prev2"><i class="material-icons">keyboard_arrow_left</i></a>
+                        <a class="waves-effect waves-light btn" id="pdf-next2"><i class="material-icons">keyboard_arrow_right</i></a>
+                      </div>
+                      <div id="page-count-container">Página <span id="pdf-current-page2"></span> de <span id="pdf-total-pages2"></span></div>
+                    </div>
+                    <img class="text" src="{% static 'img/QRCode.png' %}" id="texto"/>
+                    <div class="overflow" >
+                      <div id="container1" class=".cropper-hidden">
+                        <!--<div class="ball blue">sdsa</div>-->
+                      </div>
+                      <br>
+                      <br>
+                    </div>          
+                    </div>
+                    <canvas id="pdf-canvas2" width="500"></canvas>
+                    <div id="page-loader2">Cargando página ...</div>
+              </div>
+              {{ form.pos_x }}
+              {{ form.pos_y }}
+              {{ form.pag }}
+            </div>
+            
+            <div class="center">
+                <button type="submit" class="btn waves-effect blue darken-1">Cargar Archivo</button>
+            </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

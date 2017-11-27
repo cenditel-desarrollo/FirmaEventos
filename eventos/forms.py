@@ -38,7 +38,7 @@ class EventoForm(forms.ModelForm):
              'placeholder': 'Fecha',
              'readonly':
              'readonly'})
-        self.fields['archivo'].required=True
+        self.fields['archivo'].required = True
         self.fields['archivo'].widget.attrs.update(
             {'class': 'file-path validate',
              'placeholder': 'Subir Archivo',
@@ -57,3 +57,33 @@ class FirmaEventoForm(forms.Form):
     @version 1.0.0
     """
     pasaporte = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Ingrese su pasaporte'}))
+
+
+class UpdateFileEventoForm(forms.Form):
+    archivo = CharField()
+    pos_x = CharField()
+    pos_y = CharField()
+    pag = CharField()
+
+    class Meta:
+        """!
+            Clase que construye los meta datos del formulario
+        """
+        fields = ['archivo']
+
+    def __init__(self, *args, **kwargs):
+        """!
+            Funcion que construye los valores iniciales del formulario evento
+        """
+        super(UpdateFileEventoForm, self).__init__(*args, **kwargs)
+        self.fields['archivo'].required = True
+        self.fields['archivo'].widget.attrs.update(
+            {'class': 'file-path validate',
+             'placeholder': 'Subir Archivo',
+             'accept': '.pdf'})
+        self.fields['pos_x'].required = True
+        self.fields['pos_x'].widget = forms.HiddenInput()
+        self.fields['pos_y'].required = True
+        self.fields['pos_y'].widget = forms.HiddenInput()
+        self.fields['pag'].required = True
+        self.fields['pag'].widget = forms.HiddenInput()
