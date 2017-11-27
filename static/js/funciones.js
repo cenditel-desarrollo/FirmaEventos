@@ -73,7 +73,7 @@ function construir_datos(data) {
     html += '<li class="collection-item"><b>Pasaporte: </b>'+data.pasaporte+'</li>';
     html += '<li class="collection-item"><b>Correo: </b>'+data.correo+'</li>';
     html += '</ul>';
-    html += '<iframe width="700px" height="600px" src="https://192.168.12.154:8443/Murachi/0.1/archivos/listadopdf/'+data.documento+'">';
+    html += '<iframe width="700px" height="600px" src="https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/listadopdf/'+data.documento+'">';
     html += '</iframe><br/>';
     if (firma==true) {
         html += '<h4 class="red-text center">Ya firmó este documento</h4>'
@@ -160,9 +160,7 @@ function ObtenerHashPDFServerMultiples(parameters,cert){
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',				
-		url:"https://192.168.12.154:8443/Murachi/0.1/archivos/pdfs2",
-		//url:"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/pdfs",
-        //url: "https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados/pdfs",
+		url:"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/pdfsqr",
 		dataType: "json",
 		data: parameters,		
 		xhrFields: {withCredentials: true},
@@ -209,8 +207,7 @@ function FinalizarFirmaMultiples(signature){
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
-		url:"https://192.168.12.154:8443/Murachi/0.1/archivos/pdfs/resenas",
-		//url:"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/pdfs/resenas",
+		url:"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/pdfs/resenas",
 		dataType: 'json',
 		data: JSON.stringify({"signature":signature}),
 		xhrFields: {withCredentials: true},

@@ -28,7 +28,6 @@ function NuevoObjectoInicial(){
         num+= 1;
         if (num == 1){
           $("#firma_visible #Formato_Visible .text").hide();
-          console.log(VALOR_X);
           VALOR_X = 0;
           VALOR_Y = 0;
         }else{
