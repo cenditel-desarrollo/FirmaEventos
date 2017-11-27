@@ -42,6 +42,7 @@ class ParticipanteEventoSearch(View):
                         'pasaporte':pasaporte,'correo':p.fk_participante.correo,'documento':p.fk_evento.serial}}
         return JsonResponse(data,safe=False)
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class AjaxParticipanteFirmaEvento(View):
     """!
@@ -62,6 +63,7 @@ class AjaxParticipanteFirmaEvento(View):
         @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
         @copyright GNU/GPLv3
         @date 21-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
         @return Retorna un Json con la respuesta
         """
         data = {}
@@ -112,6 +114,7 @@ class AjaxParticipanteFirmaEvento(View):
         data = {'validate': validate, 'mensaje': mensaje}
 
         return JsonResponse(data, safe=False)
+
 
 class ParticipantesRestantes(View):
     """!

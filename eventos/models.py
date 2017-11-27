@@ -17,6 +17,7 @@ class Evento(models.Model):
     pos_y = models.CharField(max_length=32)
     pag = models.CharField(max_length=4)
     activo = models.BooleanField(default=True)
+    procesando = models.BooleanField(default=False)
 
     class Meta:
         """!

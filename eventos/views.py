@@ -8,9 +8,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
+from django.http import JsonResponse
 from django.shortcuts import (
     redirect
 )
+from django.views import View
 from django.views.generic import (
     ListView, FormView
 )
@@ -127,7 +129,8 @@ class ListEvent(ListView):
     model = Evento
     template_name = "evento.list.html"
     paginate_by = 5
-    
+
+
 class SignEvent(FormView):
     """!
     Muestra el formulario para buscar y luego firmar documento
@@ -139,11 +142,11 @@ class SignEvent(FormView):
     """
     form_class = FirmaEventoForm
     template_name = "evento.firma.html"
-    
+
     def get_context_data(self, **kwargs):
         """!
         Metodo que permite cargar de nuevo valores en los datos de contexto de la vista
-    
+
         @author Rodrigo Boet (rboet at cenditel.gob.ve)
         @copyright GNU/GPLv3
         @date 20-11-2017
@@ -180,3 +183,72 @@ class DetailEvent(DetailView):
         context['participantes'] = participante_evento
         context['num_firma'] = falta_porfirma
         return context
+
+
+class EventoProcesado(View):
+    """!
+    Clase que permite consultar si el evento se encuentra disponible para firmar
+
+    @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 27-11-2017
+    @version 1.0.0
+    """
+    model = Evento
+
+    def get(self, request):
+        """!
+        Metodo que permite verificar si el documento esta procesado
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 27-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @return Retorna un Json con la respuesta
+        """
+        evento_id = request.GET.get('event_id', None)
+        mensaje = ''
+        procesando = False
+        if evento_id is not None:
+            try:
+                evento_pro = self.model.objects.get(pk=evento_id)
+            except:
+                print(e)
+                procesando = True
+                mensaje += 'No se encuentra un evento con ese serial'
+        else:
+            evento_pro = None
+            procesando = True
+            mensaje += 'No puedes enviar un evento vacio'
+
+        if evento_pro.procesando:
+            procesando = True
+            mensaje += 'No puedes firmar el documento, en este momento\
+                        se encuentra ocupado por otro Usuario'
+        else:
+            procesando = False
+            mensaje += 'Puedes Firmar el Documento'
+        data = {'validate': procesando, 'mensaje': mensaje}
+        return JsonResponse(data, safe=False)
+
+    def post(self, request):
+        """!
+        Metodo que permite cambiar el valor procesado al  evento
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 27-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @return Retorna un Json con la respuesta
+        """
+        evento_id = request.POST.get('event_id', None)
+        if evento_id is not None:
+            try:
+                evento = self.model.objects.get(pk=evento_id)
+                evento.procesando = not evento.procesando
+                evento.save()
+                validado = True
+            except:
+                print(e)
+                validado = False
+        return JsonResponse(validado, safe=False)
