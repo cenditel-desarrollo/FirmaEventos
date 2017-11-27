@@ -51,8 +51,12 @@
         </div>
     </div>
     <div class="center">
-        <iframe width="700px" height="600px" src="https://192.168.12.154:8443/Murachi/0.1/archivos/listadopdf/{{object.serial}}">';
+        {% if object.serial %}
+        <iframe width="700px" height="600px" src="https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/listadopdf/{{object.serial}}">';
         </iframe>
+        {% else %}
+            <h4 class="red-text">No cargó ningun documento</h4>
+        {% endif %}
     </div>
     <div class="row">
         <a class="btn waves-effect blue darken-1" href="{% url 'events:list_events' %}" >Regresar</a>

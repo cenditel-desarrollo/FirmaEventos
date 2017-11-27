@@ -9,6 +9,8 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import (
     redirect
 )
@@ -59,26 +61,29 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        file =  request.FILES['file']
-        handle_uploaded_file(request.FILES['file'], file)
-        ruta = '%s/%s' % (settings.TMP, file)
-        file = open(ruta, 'rb')
-        files = {'file': file}
+        nuevo_participante = self.form_participante(request.POST)
+        consulta_api = None
+        if len(request.FILES)>0:
+            file =  request.FILES['file']
+            handle_uploaded_file(request.FILES['file'], file)
+            ruta = '%s/%s' % (settings.TMP, file)
+            file = open(ruta, 'rb')
+            files = {'file': file}
+            try:
+                r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+                consulta_api = r.json()['fileId']
+                # elimina el archivo si fue creado en la carpeta tmp
+                file.close()
+                os.unlink(ruta)
+            except Exception as e:
+                print (e)
+                file.close()
+                os.unlink(ruta)
+                messages.error(self.request, "Error al concetar al servidor y subir\
+                                              el archivo a la api Murachi")
+                return redirect(self.success_url)
         try:
-            r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
-            nuevo_participante = self.form_participante(request.POST)
-            consulta_api = r.json()['fileId']
-            # elimina el archivo si fue creado en la carpeta tmp
-            file.close()
-            os.unlink(ruta)
-        except Exception as e:
-            print (e)
-            file.close()
-            os.unlink(ruta)
-            messages.error(self.request, "Error al concetar al servidor y subir\
-                                          el archivo a la api Murachi")
-            return redirect(self.success_url)
-        try:
+            
             if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
                 nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
                 nuevo_evento.serial = consulta_api
@@ -100,7 +105,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                         fk_evento=nuevo_evento)
                         asigna_evento.save()
                 messages.success(self.request, "El usaurio %s, ha creado con exito,\
-                                            un nuevo envento %s" %
+                                            un nuevo evento %s" %
                                  (str(self.request.user),
                                   str(nuevo_evento)))
             else:
@@ -183,7 +188,7 @@ class DetailEvent(DetailView):
         context['num_firma'] = falta_porfirma
         return context
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class EventoProcesado(View):
     """!
     Clase que permite consultar si el evento se encuentra disponible para firmar
@@ -195,7 +200,7 @@ class EventoProcesado(View):
     """
     model = Evento
 
-    def get(self, request):
+    def get(self, request, event_id):
         """!
         Metodo que permite verificar si el documento esta procesado
 
@@ -205,12 +210,11 @@ class EventoProcesado(View):
         @param request <b>{object}</b> Objeto que contiene la petición
         @return Retorna un Json con la respuesta
         """
-        evento_id = request.GET.get('event_id', None)
         mensaje = ''
         procesando = False
-        if evento_id is not None:
+        if event_id is not None:
             try:
-                evento_pro = self.model.objects.get(pk=evento_id)
+                evento_pro = self.model.objects.get(pk=event_id)
             except:
                 print(e)
                 procesando = True
@@ -230,7 +234,7 @@ class EventoProcesado(View):
         data = {'validate': procesando, 'mensaje': mensaje}
         return JsonResponse(data, safe=False)
 
-    def post(self, request):
+    def post(self, request, event_id):
         """!
         Metodo que permite cambiar el valor procesado al  evento
 
@@ -240,16 +244,16 @@ class EventoProcesado(View):
         @param request <b>{object}</b> Objeto que contiene la petición
         @return Retorna un Json con la respuesta
         """
-        evento_id = request.POST.get('event_id', None)
-        if evento_id is not None:
+        if event_id is not None:
             try:
-                evento = self.model.objects.get(pk=evento_id)
+                evento = self.model.objects.get(pk=event_id)
                 evento.procesando = not evento.procesando
                 evento.save()
                 validado = True
             except:
                 print(e)
                 validado = False
+
         return JsonResponse(validado, safe=False)
 
 
@@ -265,6 +269,65 @@ class UpdateFileEvent(FormView):
     model = Evento
     form_class = UpdateFileEventoForm
     template_name = 'evento.update.html'
+    success_url = reverse_lazy('events:list_events')
 
-    def form_valid(self, form, request):
-        print(request)
+    def get_context_data(self, **kwargs):
+        evento = int(self.kwargs['event_id'])
+        context = super(UpdateFileEvent, self).get_context_data(**kwargs)
+        try:
+            evento = self.model.objects.select_related().get(pk=evento)
+        except Exception as e:
+            print(e)
+            evento = None
+        context['object'] = evento
+        return context
+
+    def form_valid(self, form):
+        print(form)
+        file =  self.request.FILES['file']
+        posx = form.cleaned_data['pos_x']
+        posy = form.cleaned_data['pos_y']
+        pag = form.cleaned_data['pag']
+        consulta_api = None
+        try:
+            event = Evento.objects.get(pk=int(self.kwargs['event_id']))
+        except Exception as e:
+            print(e)
+            messages.error(self.request, "Error, no se encuentra registrado\
+                                          este evento")
+            return redirect(self.success_url)
+
+        print(posx)
+        handle_uploaded_file(self.request.FILES['file'], file)
+        ruta = '%s/%s' % (settings.TMP, file)
+        file = open(ruta, 'rb')
+        files = {'file': file}
+        try:
+            r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+            consulta_api = r.json()['fileId']
+            # elimina el archivo si fue creado en la carpeta tmp
+            file.close()
+            os.unlink(ruta)
+        except Exception as e:
+            print (e)
+            file.close()
+            os.unlink(ruta)
+            messages.error(self.request, "Error al concetar al servidor y subir\
+                                          el archivo a la api Murachi")
+            return redirect(self.success_url)
+
+        if event is not None and consulta_api is not None:
+            event.serial = consulta_api
+            event.pos_x = posx
+            event.pos_y = posy
+            event.pag = pag
+            event.save()
+            messages.success(self.request, "El usaurio %s, ha actualizado con exito,\
+                                            el evento %s" %
+                                 (str(self.request.user),
+                                  str(event)))
+        else:
+            messages.error(self.request, "Error al actualizar, debes llanar\
+                                          todos los campos incluyendo la\
+                                          configuracion de la firma")
+        return redirect(self.success_url)

@@ -14,6 +14,13 @@
 
 {% block content %}
     <div class="content">
+        {% if object.serial %}
+        <div class="center">
+          <h5 class="center">El evento {{object.nombre_evento}}, ya contiene un documento</h5><hr/><br>
+          <iframe width="700px" height="600px" src="https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/listadopdf/{{object.serial}}">';
+          </iframe>
+        </div>
+        {% else %}
         <h5 class="center">Cargar Archivo al Evento</h5><hr/><br>
         <form id="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -64,5 +71,6 @@
             </div>
             </div>
         </form>
+        {% endif %}
     </div>
 {% endblock %}
