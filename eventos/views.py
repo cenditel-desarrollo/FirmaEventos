@@ -9,6 +9,8 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import (
     redirect
 )
@@ -183,7 +185,7 @@ class DetailEvent(DetailView):
         context['num_firma'] = falta_porfirma
         return context
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class EventoProcesado(View):
     """!
     Clase que permite consultar si el evento se encuentra disponible para firmar
@@ -195,7 +197,7 @@ class EventoProcesado(View):
     """
     model = Evento
 
-    def get(self, request):
+    def get(self, request, event_id):
         """!
         Metodo que permite verificar si el documento esta procesado
 
@@ -205,12 +207,11 @@ class EventoProcesado(View):
         @param request <b>{object}</b> Objeto que contiene la petición
         @return Retorna un Json con la respuesta
         """
-        evento_id = request.GET.get('event_id', None)
         mensaje = ''
         procesando = False
-        if evento_id is not None:
+        if event_id is not None:
             try:
-                evento_pro = self.model.objects.get(pk=evento_id)
+                evento_pro = self.model.objects.get(pk=event_id)
             except:
                 print(e)
                 procesando = True
@@ -230,7 +231,7 @@ class EventoProcesado(View):
         data = {'validate': procesando, 'mensaje': mensaje}
         return JsonResponse(data, safe=False)
 
-    def post(self, request):
+    def post(self, request, event_id):
         """!
         Metodo que permite cambiar el valor procesado al  evento
 
@@ -240,14 +241,13 @@ class EventoProcesado(View):
         @param request <b>{object}</b> Objeto que contiene la petición
         @return Retorna un Json con la respuesta
         """
-        evento_id = request.POST.get('event_id', None)
-        if evento_id is not None:
+        if event_id is not None:
             try:
-                evento = self.model.objects.get(pk=evento_id)
+                evento = self.model.objects.get(pk=event_id)
                 evento.procesando = not evento.procesando
                 evento.save()
                 validado = True
             except:
                 print(e)
                 validado = False
-        return JsonResponse(validado, safe=False)
+        return JsonResponse({'validate': validado}, safe=False)

@@ -79,21 +79,60 @@ function construir_datos(data) {
         html += '<h4 class="red-text center">Ya firmó este documento</h4>'
     }
     else{
-        html += '<a type="button" id="firmar" class="btn waves-effect blue darken-1" onclick="ObtenerCertificadoFirmanteMultiples(\''+data.documento+'\')">';
+        html += '<a type="button" id="firmar" class="btn waves-effect blue darken-1" onclick="comprobarFirma(\''+data.documento+'\')">';
         html += '<i class="material-icons left">mode_edit</i> Firmar</a>';   
     }
     $('#datos_paricipante').html(html);
 }
 
 /**
- * Función para obtener el certificado del participante
+ * Función para comprobar firma
  * @param fileId Recibe el id del documento
 */
-function ObtenerCertificadoFirmanteMultiples(fileId){
-    var xPos = yPos= signaturePage = "";
-    var lastSignature = false;
+function comprobarFirma(fileId){
     var routes = $(location).attr('pathname').split('/');
     var pk = routes[routes.length-1];
+    $.ajax({
+		type: 'GET',
+        async: false,
+		url:URL_COMPROBAR_FIRMA+pk,
+		success: function(datos){
+            if (datos.validate==true) {
+                simple_modal(datos.mensaje);
+            }
+            else{
+                $.ajax({
+                    type: 'POST',
+                    async: false,
+                    url:URL_COMPROBAR_FIRMA+pk,
+                    success: function(datos){
+                        if (datos.validate==true) {
+                            ObtenerCertificadoFirmanteMultiples(fileId,pk);
+                        }
+                        else{
+                            simple_modal("Ocurrió un error al actualizar los datos");
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log('error: ' + textStatus);
+                    }
+                });
+            }
+        },
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log('error: ' + textStatus);
+		}
+	});
+}
+
+/**
+ * Función para obtener el certificado del participante
+ * @param fileId Recibe el id del documento
+ * @param pk Recibe el id del evento
+*/
+function ObtenerCertificadoFirmanteMultiples(fileId,pk){
+    var xPos = yPos= signaturePage = "";
+    var lastSignature = false;
     
     $.ajax({
 		type: 'GET',
@@ -124,7 +163,7 @@ function ObtenerCertificadoFirmanteMultiples(fileId){
                         });				
         
                     // ahora llamar al ajax de obtener la resena del pdf
-                    ObtenerHashPDFServerMultiples(parameters, cert);	
+                    ObtenerHashPDFServerMultiples(parameters, cert, pk);	
         
                 }, 
                 function(err) {
@@ -138,6 +177,17 @@ function ObtenerCertificadoFirmanteMultiples(fileId){
                      else if(err == "Error: no_implementation") {
                          error = "No hay soporte para el manejo del certificado";
                     }
+                    $.ajax({
+                        type: 'POST',
+                        async: false,
+                        url:URL_COMPROBAR_FIRMA+pk,
+                        success: function(datos){
+                            console.log(datos);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            console.log('error: ' + textStatus);
+                        }
+                    });
                     simple_modal(error);
                 }
         
@@ -154,8 +204,9 @@ function ObtenerCertificadoFirmanteMultiples(fileId){
  * Función para obtener el hash y procesar la informacion
  * @param parameters Recibe los parametros
  * @param cert Recibe los certificados
+ * @param pk Recibe el id del evento
 */
-function ObtenerHashPDFServerMultiples(parameters,cert){
+function ObtenerHashPDFServerMultiples(parameters,cert,pk){
 
 	$.ajax({
 		type: 'POST',
@@ -174,7 +225,7 @@ function ObtenerHashPDFServerMultiples(parameters,cert){
 			//Procesa la información
 			window.hwcrypto.sign(cert, {type: hashtype, hex: hash}, {lang: lang}).then(
 				function(signature) {
-					FinalizarFirmaMultiples(signature.hex);
+					FinalizarFirmaMultiples(signature.hex, pk);
       			}, 
       			function(err) {
 					var error;
@@ -187,6 +238,17 @@ function ObtenerHashPDFServerMultiples(parameters,cert){
                      else if(err == "Error: no_implementation") {
                          error = "No hay soporte para el manejo del certificado";
                      }
+                    $.ajax({
+                        type: 'POST',
+                        async: false,
+                        url:URL_COMPROBAR_FIRMA+pk,
+                        success: function(datos){
+                            console.log(datos);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            console.log('error: ' + textStatus);
+                        }
+                    });
                     simple_modal(error);
     	  	});
 			
@@ -201,8 +263,9 @@ function ObtenerHashPDFServerMultiples(parameters,cert){
 /**
  * Función para enviar la firma al servidor
  * @param signature Recibe la firma
+ * @param pk Recibe el id del evento
 */
-function FinalizarFirmaMultiples(signature){
+function FinalizarFirmaMultiples(signature, pk){
 
 	$.ajax({
 		type: 'POST',
@@ -214,9 +277,31 @@ function FinalizarFirmaMultiples(signature){
 		headers: {"Authorization":"Basic YWRtaW46YWRtaW4="},
 		success: function(data, textStatus, jqXHR){
             actualizar_participante(data['signedFileId']);
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url:URL_COMPROBAR_FIRMA+pk,
+                success: function(datos){
+                    console.log(datos);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log('error: ' + textStatus);
+                }
+            });
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log('error en pdfs/resenas: ' + textStatus);
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url:URL_COMPROBAR_FIRMA+pk,
+                success: function(datos){
+                    console.log(datos);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log('error: ' + textStatus);
+                }
+            });
 		}
 	});
 
