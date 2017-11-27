@@ -12,4 +12,6 @@ urlpatterns = [
         name='firma_events'),
     url(r'^detail-evento/(?P<pk>\d+)$', DetailEvent.as_view(),
         name='detail_event'),
+    url(r'^comprobar-evento/$', EventoProcesado.as_view(),
+        name='comprobar_evento'),
 ]
