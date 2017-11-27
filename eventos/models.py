@@ -12,10 +12,10 @@ class Evento(models.Model):
     """
     nombre_evento = models.CharField(max_length=128, unique=True)
     fecha = models.DateField(null=False)
-    serial = models.CharField(max_length=128)
-    pos_x = models.CharField(max_length=32)
-    pos_y = models.CharField(max_length=32)
-    pag = models.CharField(max_length=4)
+    serial = models.CharField(max_length=128,null=True)
+    pos_x = models.CharField(max_length=32,null=True)
+    pos_y = models.CharField(max_length=32,null=True)
+    pag = models.CharField(max_length=4,null=True)
     activo = models.BooleanField(default=True)
     procesando = models.BooleanField(default=False)
 

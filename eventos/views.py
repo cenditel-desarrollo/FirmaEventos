@@ -61,26 +61,29 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        file =  request.FILES['file']
-        handle_uploaded_file(request.FILES['file'], file)
-        ruta = '%s/%s' % (settings.TMP, file)
-        file = open(ruta, 'rb')
-        files = {'file': file}
+        nuevo_participante = self.form_participante(request.POST)
+        consulta_api = None
+        if len(request.FILES)>0:
+            file =  request.FILES['file']
+            handle_uploaded_file(request.FILES['file'], file)
+            ruta = '%s/%s' % (settings.TMP, file)
+            file = open(ruta, 'rb')
+            files = {'file': file}
+            try:
+                r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
+                consulta_api = r.json()['fileId']
+                # elimina el archivo si fue creado en la carpeta tmp
+                file.close()
+                os.unlink(ruta)
+            except Exception as e:
+                print (e)
+                file.close()
+                os.unlink(ruta)
+                messages.error(self.request, "Error al concetar al servidor y subir\
+                                              el archivo a la api Murachi")
+                return redirect(self.success_url)
         try:
-            r = requests.post('https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/cargar', verify=False, headers={'Authorization': 'Basic YWRtaW46YWRtaW4='}, files=files)
-            nuevo_participante = self.form_participante(request.POST)
-            consulta_api = r.json()['fileId']
-            # elimina el archivo si fue creado en la carpeta tmp
-            file.close()
-            os.unlink(ruta)
-        except Exception as e:
-            print (e)
-            file.close()
-            os.unlink(ruta)
-            messages.error(self.request, "Error al concetar al servidor y subir\
-                                          el archivo a la api Murachi")
-            return redirect(self.success_url)
-        try:
+            
             if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
                 nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
                 nuevo_evento.serial = consulta_api
@@ -102,7 +105,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                         fk_evento=nuevo_evento)
                         asigna_evento.save()
                 messages.success(self.request, "El usaurio %s, ha creado con exito,\
-                                            un nuevo envento %s" %
+                                            un nuevo evento %s" %
                                  (str(self.request.user),
                                   str(nuevo_evento)))
             else:

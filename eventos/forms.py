@@ -38,14 +38,17 @@ class EventoForm(forms.ModelForm):
              'placeholder': 'Fecha',
              'readonly':
              'readonly'})
-        self.fields['archivo'].required=True
+        self.fields['archivo'].required=False
         self.fields['archivo'].widget.attrs.update(
             {'class': 'file-path validate',
              'placeholder': 'Subir Archivo',
              'accept': '.pdf'})
         self.fields['pos_x'].widget = forms.HiddenInput()
+        self.fields['pos_x'].required=False
         self.fields['pos_y'].widget = forms.HiddenInput()
+        self.fields['pos_y'].required=False
         self.fields['pag'].widget = forms.HiddenInput()
+        self.fields['pag'].required=False
 
 class FirmaEventoForm(forms.Form):
     """!
