@@ -23,9 +23,15 @@
                 <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:detail_event' evento.id %}">
                     <i class="material-icons left">search</i> Detalle
                 </a>
+                {% if evento.serial %}
                 <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:firma_events' evento.id %}">
                     <i class="material-icons left">mode_edit</i> Firmar
                 </a>
+                {% else %}
+                <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:firma_events' evento.id %}">
+                    <i class="material-icons left">backup</i> Cargar Documento
+                </a>
+                {% endif %}
             </div>
         </div>
     {% empty %}
