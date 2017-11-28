@@ -79,7 +79,7 @@ class AjaxParticipanteFirmaEvento(View):
                     update_evento = self.model.objects.get(pk=evento_id)
                     update_evento.serial = serial
                     update_evento.save()
-                    mensaje += 'Se actualizo el serial del evento \n'
+                    mensaje += 'Se actualizó el serial del evento \n'
                 except Exception as e:
                     print (e)
                     validate = False
@@ -97,6 +97,12 @@ class AjaxParticipanteFirmaEvento(View):
                                     fk_evento=evento_id)
                 update_parti_event.firma = True
                 update_parti_event.save()
+                finally_event = self.model_participante.objects.filter(fk_evento=evento_id, firma=False).count ()
+                if finally_event == 0:
+                    update_evento = self.model.objects.get(pk=evento_id)
+                    update_evento.activo = False
+                    update_evento.save()
+                    mensaje += 'Ya se registraron todas las firmas al documento \n'
                 mensaje += 'Se actualizo la firma del participante %s, \
                 para el evento %s' % (update_parti_event.fk_participante.nombres,
                                       update_parti_event.fk_evento.nombre_evento)
@@ -104,7 +110,7 @@ class AjaxParticipanteFirmaEvento(View):
             except Exception as e:
                 print(e)
                 validate = False
-                mensaje += 'El evento no esta asociado al participante\
+                mensaje += 'El evento no está asociado al participante\
                             o no se encuentra registrado\n'
 
         else:

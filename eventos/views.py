@@ -79,7 +79,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                 print (e)
                 file.close()
                 os.unlink(ruta)
-                messages.error(self.request, "Error al concetar al servidor y subir\
+                messages.error(self.request, "Error al conectar al servidor y subir\
                                               el archivo a la api Murachi")
                 return redirect(self.success_url)
         try:
@@ -104,7 +104,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                         fk_participante=nuevo_participante,
                                         fk_evento=nuevo_evento)
                         asigna_evento.save()
-                messages.success(self.request, "El usaurio %s, ha creado con exito,\
+                messages.success(self.request, "El usuario %s, ha creado con exito,\
                                             un nuevo evento %s" %
                                  (str(self.request.user),
                                   str(nuevo_evento)))
@@ -115,8 +115,8 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                 self.form_participante(request.POST).errors))
         except Exception as e:
             print (e)
-            messages.error(self.request, "Esta intentado realizar una\
-                                          accion incorrecta")
+            messages.error(self.request, "Esta intentando realizar una\
+                                          acción incorrecta")
 
         return redirect(self.success_url)
 
@@ -312,7 +312,7 @@ class UpdateFileEvent(FormView):
             print (e)
             file.close()
             os.unlink(ruta)
-            messages.error(self.request, "Error al concetar al servidor y subir\
+            messages.error(self.request, "Error al conectar al servidor y subir\
                                           el archivo a la api Murachi")
             return redirect(self.success_url)
 
@@ -322,12 +322,12 @@ class UpdateFileEvent(FormView):
             event.pos_y = posy
             event.pag = pag
             event.save()
-            messages.success(self.request, "El usaurio %s, ha actualizado con exito,\
+            messages.success(self.request, "El usuario %s, ha actualizado con exito,\
                                             el evento %s" %
                                  (str(self.request.user),
                                   str(event)))
         else:
-            messages.error(self.request, "Error al actualizar, debes llanar\
-                                          todos los campos incluyendo la\
-                                          configuracion de la firma")
+            messages.error(self.request, "Error al actualizar, debes llenar\
+                                          todos los campos, incluyendo la\
+                                          configuración de la firma")
         return redirect(self.success_url)

@@ -14,7 +14,7 @@
                     </ul>
                     <ul>
                         <li><b>Activo: </b>{% if object.activo %}
-                            Si, el documento si se encuentra activo aún falta {{num_firma}} {% if num_firma > 1 %}participantes {% else %} participante {% endif%} por firmar</li>
+                            Sí, el documento si se encuentra activo aún falta {{num_firma}} {% if num_firma > 1 %}participantes {% else %} participante {% endif%} por firmar</li>
                         {% else %}
                             No, el documento no esta activo todos los participantes han firmado</li>
                         {% endif %}
@@ -28,7 +28,7 @@
             <thead>
               <tr>
                   <th scope="col">Nombresy Apellidos</th>
-                  <th scope="col">Firmo?</th>
+                  <th scope="col">Firmó?</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +39,7 @@
                         </td>
                         <td>
                             {% if firmantes.firma %}
-                                <i class="material-icons green-text" title="Si">done</i>
+                                <i class="material-icons green-text" title="Sí">done</i>
                             {% else %}
                                 <i class="material-icons red-text" title="No">clear</i>
                             {% endif %}
