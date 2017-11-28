@@ -2,9 +2,9 @@
 {% block content %}
 	<div class="center">
 		<h3>Bienvenidos a Murachi-LAT</h3><hr/>
-		{% if request.user.is_autenticated %}
-		<p>Si deseas ingresar como admin haz click en <b>Ingresar</b></p>
-		<a href="{% url 'users:login' %}" class="btn waves-effect btn blue darken-1">Ingresar</a>
+		{% if not request.user.is_authenticated %}
+			<p>Si deseas ingresar como admin haz click en <b>Ingresar</b></p>
+			<a href="{% url 'users:login' %}" class="btn waves-effect btn blue darken-1">Ingresar</a>
 		{% endif %}
 		<p>Para ver el historial de eventos, haz click en <b>Eventos</b></p>
 		<a href="{% url 'events:list_events' %}" class="btn waves-effect btn blue darken-1">Eventos</a>
