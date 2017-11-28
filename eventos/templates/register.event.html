@@ -62,31 +62,34 @@
         <form id="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="center">
-            <div class="input-field {% if form.nombre_evento.errors %}invalid{% endif %}">
-                {{ form.nombre_evento }}
-                <label for="icon_prefix {{ form.nombre_evento.auto_id }}">Nombre</label>
-                {% include 'base.forms.errors.html' with form_errors=form.nombre_evento.errors col_title_error='col s2' col_msg_error='col s10' %}
-            </div>
+                <div class="input-field {% if form.nombre_evento.errors %}invalid{% endif %}">
+                    {{ form.nombre_evento }}
+                    <label for="icon_prefix {{ form.nombre_evento.auto_id }}">Nombre</label>
+                    {% include 'base.forms.errors.html' with form_errors=form.nombre_evento.errors col_title_error='col s2' col_msg_error='col s10' %}
+                </div>
+                
+                <div class="input-field {% if form.fecha.errors %}invalid{% endif %}">
+                    <i class="tiny material-icons prefix">perm_contact_calendar</i>
+                    {{ form.fecha }}
+                    <label for="icon_prefix {{ form.fecha.auto_id }}">Fecha</label>
+                    {% include 'base.forms.errors.html' with form_errors=form.fecha.errors col_title_error='col s2' col_msg_error='col s10' %}
+                </div>
+    
+                <div class="file-field input-field {% if form.archivo.errors %}invalid{% endif %}">
+                    
+                    <div class="btn">
+                    <span for="icon_prefix {{ form.archivo.auto_id }}">Archivo</span>
+                        <input type="file" name="file" id="file" accept="application/pdf">
+                    </div>
+                    <div class="file-path-wrapper">
+                        {{ form.archivo }}
+                    </div>
+                    {% include 'base.forms.errors.html' with form_errors=form.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
+                    
+                </div>
+                <h5 class="blue-text">Luego de cargar un documento debe colocar el código Qr en la ubicación y página de su preferencia.</h5>
             
-            <div class="input-field {% if form.fecha.errors %}invalid{% endif %}">
-                <i class="tiny material-icons prefix">perm_contact_calendar</i>
-                {{ form.fecha }}
-                <label for="icon_prefix {{ form.fecha.auto_id }}">Fecha</label>
-                {% include 'base.forms.errors.html' with form_errors=form.fecha.errors col_title_error='col s2' col_msg_error='col s10' %}
-            </div>
-
-            <div class="file-field input-field {% if form.archivo.errors %}invalid{% endif %}">
-                
-                <div class="btn">
-                <span for="icon_prefix {{ form.archivo.auto_id }}">Archivo</span>
-                    <input type="file" name="file" id="file" accept="application/pdf">
-                </div>
-                <div class="file-path-wrapper">
-                    {{ form.archivo }}
-                </div>
-                {% include 'base.forms.errors.html' with form_errors=form.archivo.errors col_title_error='col s2' col_msg_error='col s10' %}
-                
-            </div>
+            
             </div>
             <div class="col s8 m2 offset-s2">
             <div id="pdf-main-container" style="display:none;"><center><h5>Configurar Posicion de la Firma</h5></center> 
