@@ -257,7 +257,7 @@ class EventoProcesado(View):
         return JsonResponse(validado, safe=False)
 
 
-class UpdateFileEvent(FormView):
+class UpdateFileEvent(LoginRequiredMixin, FormView):
     """!
     Clase que permite actualizar subir un archivo a un evento que no se haya cargado
 

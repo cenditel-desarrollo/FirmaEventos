@@ -71,7 +71,9 @@ class LoginView(FormView):
         except Exception as e:
             print (e)
 
+
         usuario = authenticate(username=usuario, password=contrasena)
+        print(usuario, contrasena)
         if usuario is not None:
             login(self.request, usuario)
 
@@ -80,15 +82,14 @@ class LoginView(FormView):
                 self.request.session.set_expiry(1209600)
             messages.info(self.request, MENSAJES_START['INICIO_SESION'] % (usuario.first_name, usuario.username))
         else:
+            self.success_url = reverse_lazy('users:login')
             user = User.objects.filter(username=form.cleaned_data['usuario'])
             if user:
                 user = user.get()
                 if not user.is_active:
-                    self.success_url = reverse_lazy('users:login')
                     messages.error(self.request, MENSAJES_LOGIN['CUENTA_INACTIVA'])
-            else:
-                self.success_url = reverse_lazy('users:login')
-                messages.warning(self.request, MENSAJES_LOGIN['LOGIN_USUARIO_NO_VALIDO'])
+                else:
+                    messages.warning(self.request, MENSAJES_LOGIN['LOGIN_USUARIO_NO_VALIDO'])
 
         return super(LoginView, self).form_valid(form)
 
