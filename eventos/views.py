@@ -294,7 +294,7 @@ class UpdateFileEvent(FormView):
         except Exception as e:
             print(e)
             messages.error(self.request, "Error, no se encuentra registrado\
-                                          este evento")
+                                          esté evento")
             return redirect(self.success_url)
 
         print(posx)
