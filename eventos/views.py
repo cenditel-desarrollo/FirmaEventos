@@ -88,7 +88,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
             if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
                 nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
                 nuevo_evento.serial = consulta_api
-                # Control para guardar y asignar participantes al evento
+
                 for form in nuevo_participante:
                     instance = form.save(commit=False)
                     if instance.nombres == '' or instance.apellidos == '' or instance.pasaporte == '':
@@ -97,6 +97,7 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                                       vacio excepto el correo")
                         return redirect(self.success_url)
                 nuevo_evento.save()
+                # Control para guardar y asignar participantes al evento
                 for form in nuevo_participante:
                     if form.cleaned_data.get('DELETE') and form.instance.pk:
                         form.instance.delete()
