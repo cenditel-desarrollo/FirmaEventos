@@ -19,4 +19,6 @@ urlpatterns = [
         name='comprobar_evento_nid'),
     url(r'^actualizar-evento/(?P<event_id>\d+)$', UpdateFileEvent.as_view(),
         name='update_evento'),
+    url(r'^actualizar-evento-participantes/(?P<pk>[\w-]+)$', UpdateEventView.as_view(),
+        name='update_evento_participante'),
 ]

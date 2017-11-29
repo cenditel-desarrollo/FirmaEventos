@@ -18,6 +18,7 @@ from django.views import View
 from django.views.generic import (
     ListView, FormView
 )
+from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
 
 from multi_form_view import MultiModelFormView
@@ -83,12 +84,19 @@ class RegisterEvent(LoginRequiredMixin, FormView):
                                               el archivo a la api Murachi")
                 return redirect(self.success_url)
         try:
-            
+
             if self.form_class(request.POST).is_valid() and nuevo_participante.is_valid():
                 nuevo_evento = self.form_class(request.POST, request.FILES).save(commit=False)
                 nuevo_evento.serial = consulta_api
-                nuevo_evento.save()
                 # Control para guardar y asignar participantes al evento
+                for form in nuevo_participante:
+                    instance = form.save(commit=False)
+                    if instance.nombres == '' or instance.apellidos == '' or instance.pasaporte == '':
+                        messages.error(self.request, "Ninguno de los campos del\
+                                                      participante puede estar\
+                                                      vacio excepto el correo")
+                        return redirect(self.success_url)
+                nuevo_evento.save()
                 for form in nuevo_participante:
                     if form.cleaned_data.get('DELETE') and form.instance.pk:
                         form.instance.delete()
@@ -331,3 +339,64 @@ class UpdateFileEvent(LoginRequiredMixin, FormView):
                                           todos los campos, incluyendo la\
                                           configuración de la firma")
         return redirect(self.success_url)
+
+
+class UpdateEventView(LoginRequiredMixin, UpdateView):
+    """!
+    Clase que permite actualizar los datos de un evento
+
+    @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 28-11-2017
+    @version 1.0.0
+    """
+    model = Evento
+    form_class = UpdateEventoForm
+    template_name = 'evento.update.participantes.html'
+    success_url = reverse_lazy('events:list_events')
+    form_participante = FormsetParticipanteEvento
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateEventView, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class()
+        if 'form2' not in context:
+            evento = int(self.kwargs['pk'])
+            participante_evento = Participante.objects.filter(participanteevento__fk_evento=evento)
+            context['form2'] = self.form_participante(queryset=participante_evento)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print('entra en el valid')
+        evento = int(self.kwargs['pk'])
+        update_participante = self.form_participante(request.POST)
+        print(update_participante)
+        if self.form_class(request.POST).is_valid() and update_participante.is_valid():
+            evento = self.model.objects.get(pk=evento)
+            update_evento = self.form_class(request.POST, instance=evento).save(commit=False)
+            update_evento.save()
+
+        # Control para guardar y asignar participantes al evento
+
+            for form in update_participante:
+                if form.cleaned_data.get('DELETE') and form.instance.pk:
+                    form.instance.delete()
+                else:
+                    instance = form.save(commit=False)
+                    parametros = {
+                                    'nombres': instance.nombres,
+                                    'apellidos': instance.apellidos,
+                                    'correo': instance.correo
+                                    }
+                    update_participante, create = Participante.objects.update_or_create(pasaporte=instance.pasaporte, defaults=parametros)
+                    asigna_evento = ParticipanteEvento(
+                                    fk_participante=update_participante,
+                                    fk_evento=update_evento)
+                    #asigna_evento.save()
+
+            messages.success(request, "Se actualizó el evento %s" % (update_evento))
+        return redirect(self.success_url)
+        #return super(UpdateEventView, self).form_valid(form)
+
+    #def form_invalid(self, form, **kwargs):
+    #    return super(UpdateEventView, self).form_invalid(form)

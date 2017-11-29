@@ -64,6 +64,14 @@ class FirmaEventoForm(forms.Form):
 
 
 class UpdateFileEventoForm(forms.Form):
+    """!
+    Clase que permite crear el formulario para subir un documento a un evento
+
+    @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 19-11-2017
+    @version 1.0.0
+    """
     archivo = CharField()
     pos_x = CharField()
     pos_y = CharField()
@@ -91,3 +99,34 @@ class UpdateFileEventoForm(forms.Form):
         self.fields['pos_y'].widget = forms.HiddenInput()
         self.fields['pag'].required = True
         self.fields['pag'].widget = forms.HiddenInput()
+
+
+class UpdateEventoForm(forms.ModelForm):
+    """!
+    Clase que permite crear el formulario para el update del evento
+
+    @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+    @copyright <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU Public License versión 3 (GPLv3)</a>
+    @date 28-11-2017
+    @version 1.0.0
+    """
+    class Meta:
+        """!
+            Clase que construye los meta datos del formulario
+        """
+        model = Evento
+        fields = ['nombre_evento', 'fecha']
+
+    def __init__(self, *args, **kwargs):
+        """!
+            Funcion que construye los valores iniciales del formulario update evento
+        """
+        super(UpdateEventoForm, self).__init__(*args, **kwargs)
+        self.fields['nombre_evento'].widget.attrs.update(
+            {'class': 'form-control',
+             'placeholder': 'Nombre del evento'})
+        self.fields['fecha'].widget.attrs.update(
+            {'class': 'datepicker',
+             'placeholder': 'Fecha',
+             'readonly':
+             'readonly'})
