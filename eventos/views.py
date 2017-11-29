@@ -38,6 +38,7 @@ def handle_uploaded_file(file, name):
         for chunk in file.chunks():
             destination.write(chunk)
 
+
 class RegisterEvent(LoginRequiredMixin, FormView):
     """!
     Muestra el formulario de registro de usuarios
@@ -62,6 +63,15 @@ class RegisterEvent(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
+        """!
+        Metodo que permite registra y agregar participantes al evento
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 20-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @return Retorna un mensaje de error o exito al success
+        """
         nuevo_participante = self.form_participante(request.POST)
         consulta_api = None
         if len(request.FILES)>0:
@@ -184,6 +194,16 @@ class DetailEvent(DetailView):
     template_name = "evento.detail.html"
 
     def get_context_data(self, **kwargs):
+        """!
+        Metodo que permite cargar de nuevo valores en los datos de contexto de la vista
+
+        @author Rodrigo Boet (rboet at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 20-11-2017
+        @param self <b>{object}</b> Objeto que instancia la clase
+        @param kwargs <b>{object}</b> Objeto que contiene los datos de contexto
+        @return Retorna los datos de contexto
+        """
         evento = int(self.kwargs['pk'])
         context = super(DetailEvent, self).get_context_data(**kwargs)
         try:
@@ -196,6 +216,7 @@ class DetailEvent(DetailView):
         context['participantes'] = participante_evento
         context['num_firma'] = falta_porfirma
         return context
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class EventoProcesado(View):
@@ -281,6 +302,16 @@ class UpdateFileEvent(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('events:list_events')
 
     def get_context_data(self, **kwargs):
+        """!
+        Metodo que permite cargar de nuevo valores en los datos de contexto de la vista
+
+        @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 27-11-2017
+        @param self <b>{object}</b> Objeto que instancia la clase
+        @param kwargs <b>{object}</b> Objeto que contiene los datos de contexto
+        @return Retorna los datos de contexto
+        """
         evento = int(self.kwargs['event_id'])
         context = super(UpdateFileEvent, self).get_context_data(**kwargs)
         try:
@@ -288,11 +319,26 @@ class UpdateFileEvent(LoginRequiredMixin, FormView):
         except Exception as e:
             print(e)
             evento = None
+        firma = ParticipanteEvento.objects.filter(fk_evento=evento, firma=True).count()
+        if firma >= 1:
+            valida = True
+        else:
+            valida = False
+
         context['object'] = evento
+        context['valida'] = valida
         return context
 
     def form_valid(self, form):
-        print(form)
+        """!
+        Metodo que permite validar el formulario y agregar archivo al evento
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 27-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @return Retorna un mensaje de error o exito al success
+        """
         file =  self.request.FILES['file']
         posx = form.cleaned_data['pos_x']
         posy = form.cleaned_data['pos_y']
@@ -306,7 +352,6 @@ class UpdateFileEvent(LoginRequiredMixin, FormView):
                                           esté evento")
             return redirect(self.success_url)
 
-        print(posx)
         handle_uploaded_file(self.request.FILES['file'], file)
         ruta = '%s/%s' % (settings.TMP, file)
         file = open(ruta, 'rb')
@@ -358,6 +403,16 @@ class UpdateEventView(LoginRequiredMixin, UpdateView):
     form_participante = FormsetParticipanteEvento
 
     def get_context_data(self, **kwargs):
+        """!
+        Metodo que permite cargar de nuevo valores en los datos de contexto de la vista
+
+        @author Ing. Leonel P. Hernandez M. (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 28-11-2017
+        @param self <b>{object}</b> Objeto que instancia la clase
+        @param kwargs <b>{object}</b> Objeto que contiene los datos de contexto
+        @return Retorna los datos de contexto
+        """
         context = super(UpdateEventView, self).get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class()
@@ -368,36 +423,65 @@ class UpdateEventView(LoginRequiredMixin, UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        print('entra en el valid')
+        """!
+        Metodo que permite actualizar y agregar mas participantes al evento
+
+        @author Leonel P. Hernandez M (lhernandez at cenditel.gob.ve)
+        @copyright GNU/GPLv3
+        @date 29-11-2017
+        @param request <b>{object}</b> Objeto que contiene la petición
+        @return Retorna un mensaje de error o exito al success
+        """
         evento = int(self.kwargs['pk'])
         update_participante = self.form_participante(request.POST)
-        print(update_participante)
-        if self.form_class(request.POST).is_valid() and update_participante.is_valid():
-            evento = self.model.objects.get(pk=evento)
-            update_evento = self.form_class(request.POST, instance=evento).save(commit=False)
-            update_evento.save()
-
-        # Control para guardar y asignar participantes al evento
-
-            for form in update_participante:
-                if form.cleaned_data.get('DELETE') and form.instance.pk:
-                    form.instance.delete()
-                else:
+        try:
+            if self.form_class(request.POST).is_valid() and update_participante.is_valid():
+                evento = self.model.objects.get(pk=evento)
+                update_evento = self.form_class(request.POST, instance=evento).save(commit=False)
+                for form in update_participante:
                     instance = form.save(commit=False)
-                    parametros = {
-                                    'nombres': instance.nombres,
-                                    'apellidos': instance.apellidos,
-                                    'correo': instance.correo
-                                    }
-                    update_participante, create = Participante.objects.update_or_create(pasaporte=instance.pasaporte, defaults=parametros)
-                    asigna_evento = ParticipanteEvento(
-                                    fk_participante=update_participante,
-                                    fk_evento=update_evento)
-                    #asigna_evento.save()
+                    if instance.nombres == '' or instance.apellidos == '' or instance.pasaporte == '':
+                        messages.error(self.request, "Ninguno de los campos del\
+                                                      participante puede estar\
+                                                      vacio excepto el correo")
+                        return redirect(self.success_url)
 
-            messages.success(request, "Se actualizó el evento %s" % (update_evento))
+                update_evento.save()
+                # Control para guardar y asignar participantes al evento
+                lista_participantes = list(ParticipanteEvento.objects.filter(fk_evento=int(self.kwargs['pk']), firma=False).values('fk_participante__pasaporte'))
+
+                lista_comprobar = []
+                for valor in lista_participantes:
+                    lista_comprobar += valor.values()
+                for form in update_participante:
+                    if form.cleaned_data.get('DELETE') and form.instance.pk:
+                        form.instance.delete()
+                    else:
+                        instance = form.save(commit=False)
+
+                        parametros = {
+                                        'nombres': instance.nombres,
+                                        'apellidos': instance.apellidos,
+                                        'correo': instance.correo
+                                     }
+                        if instance.pasaporte in lista_comprobar:
+                            lista_comprobar.remove(instance.pasaporte)
+                        update_participante, create = Participante.objects.update_or_create(pasaporte=instance.pasaporte, defaults=parametros)
+                        parametro_update = {'fk_participante': update_participante}
+                        update_evento_participante, create_part_event = ParticipanteEvento.objects.update_or_create(fk_evento=update_evento, fk_participante__pasaporte=instance.pasaporte, defaults=parametro_update)
+                        update_evento_participante.save()
+                messages.success(request, "El usuario %s, actualizó el evento %s" % (str(self.request.user), str(update_evento)))
+                for valor in lista_comprobar:
+                    e = ParticipanteEvento.objects.get(fk_evento=update_evento, fk_participante__pasaporte=valor)
+                    e.delete()
+
+            else:
+                messages.error(self.request, "Existe un error en el\
+                                              Formualario %s %s" %
+                               (self.form_class(request.POST).errors,
+                                self.form_participante(request.POST).errors))
+        except Exception as e:
+            print(e)
+            messages.error(self.request, "Esta intentando realizar una\
+                                          acción incorrecta")
         return redirect(self.success_url)
-        #return super(UpdateEventView, self).form_valid(form)
-
-    #def form_invalid(self, form, **kwargs):
-    #    return super(UpdateEventView, self).form_invalid(form)

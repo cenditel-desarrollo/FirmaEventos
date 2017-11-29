@@ -14,7 +14,7 @@
 
 {% block content %}
     <div class="content">
-        {% if object.serial %}
+        {% if valida %}
         <div class="center">
           <h5 class="center">El evento {{object.nombre_evento}}, ya contiene un documento</h5><hr/><br>
           <iframe width="700px" height="600px" src="https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/listadopdf/{{object.serial}}">';

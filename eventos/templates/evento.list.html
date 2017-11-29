@@ -27,13 +27,13 @@
                 <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:firma_events' evento.id %}">
                     <i class="material-icons left">mode_edit</i> Firmar
                 </a>
-                {% else %}
-                    {% if request.user.is_authenticated %}
-                        <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:update_evento' evento.id %}">
-                            <i class="material-icons left">backup</i> Cargar Documento
-                        </a>
-                    {% endif %}
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                    <a type="button" class="btn waves-effect blue darken-1" href="{% url 'events:update_evento' evento.id %}">
+                        <i class="material-icons left">backup</i> Cargar Documento
+                    </a>
+                {% endif %}
+                
                 {% if request.user.is_authenticated %}
                     <a type"button" class="btn waves-effect blue darken-1" href="{% url  'events:update_evento_participante' evento.id %}"><i class="material-icons left">border_color</i>Editar Evento
                     </a>

@@ -15,7 +15,11 @@
             <a type="button" class="btn waves-effect blue darken-1" onclick="get_event_user()">
                 <i class="material-icons left">search</i> Buscar
             </a>
-            <div id="datos_paricipante"></div>
+            {% if nombre_evento.serial %}
+                <div id="datos_paricipante"></div>
+            {% else %}
+                <h3>No existe Documento para firmar</h3>
+            {% endif %}
         </form>
         <div class="row" style="padding-top: 25px;">
             <a class="btn left waves-effect blue darken-1" href="{% url 'events:list_events' %}" >Regresar</a>
