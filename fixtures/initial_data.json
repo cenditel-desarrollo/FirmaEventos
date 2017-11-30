@@ -214,6 +214,26 @@
     }
   },
   {
+    "model": "participantes.participante",
+    "pk": 21,
+    "fields":  {
+        "nombres": "Peter",
+        "apellidos": "Allen",
+        "pasaporte": "C0002416",
+        "correo": "ceo@mps.gov.bz"
+      }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 22,
+    "fields":  {
+        "nombres": "Floyd",
+        "apellidos": "Levi",
+        "pasaporte": "R0476275",
+        "correo": "floyd.levi@egov.gy"
+      }
+  },
+  {
     "model": "participantes.participanteevento",
     "pk": 1,
     "fields": {
@@ -389,6 +409,24 @@
     "pk": 20,
     "fields": {
       "fk_participante": 20,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 21,
+    "fields": {
+      "fk_participante": 21,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 22,
+    "fields": {
+      "fk_participante": 22,
       "fk_evento": 1,
       "firma": false
     }
