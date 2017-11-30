@@ -1,0 +1,396 @@
+[
+  {
+    "model": "eventos.evento",
+    "pk": 1,
+    "fields": {
+      "nombre_evento": "Firma de Declaración de la XI Reunión de la RedGealc 2017",
+      "fecha": "2017-11-30",
+      "serial": "",
+      "pos_x": "",
+      "pos_y": "",
+      "pag": "",
+      "activo": true,
+      "procesando": false
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 1,
+    "fields": {
+      "nombres": "Daniel Alejandro",
+      "apellidos": "Abadie",
+      "pasaporte": "AAD662257",
+      "correo": "dabadie@modernizacion.gob.ar"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 2,
+    "fields": {
+      "nombres": "Carol Catherine",
+      "apellidos": "Roach",
+      "pasaporte": "ER0045444",
+      "correo": "carolroach@bahamas.gov.bs"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 3,
+    "fields": {
+      "nombres": "Khantuta Muruchi",
+      "apellidos": "Escobar",
+      "pasaporte": "4378688",
+      "correo": "kmuruchi@agetic.gob.bo"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 4,
+    "fields": {
+      "nombres": "Jean Paulo",
+      "apellidos": "Castro e Silva",
+      "pasaporte": "F0861002",
+      "correo": "jean.paulo@planejamento.gov.br"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 5,
+    "fields": {
+      "nombres": "Juan Cristóbal",
+      "apellidos": "Palma",
+      "pasaporte": "F19412259",
+      "correo": "jpalma@minsegpres.gob.cl"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 6,
+    "fields": {
+      "nombres": "Zailen Mariam",
+      "apellidos": "Barahona Morales",
+      "pasaporte": "114700128",
+      "correo": "zailen.barahona@micit.go.cr"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 7,
+    "fields": {
+      "nombres": "Javier",
+      "apellidos": "Jara",
+      "pasaporte": "909129041",
+      "correo": "javier.jara@mintel.gob.ec"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 8,
+    "fields": {
+      "nombres": "Eric",
+      "apellidos": "Ramírez López",
+      "pasaporte": "A035933301",
+      "correo": "eramirez@presidencia.gob.sv"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 9,
+    "fields": {
+      "nombres": "César",
+      "apellidos": "Cabrera",
+      "pasaporte": "15797414K",
+      "correo": "cesar_acl@hotmail.com"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 10,
+    "fields": {
+      "nombres": "Elvin Nahum",
+      "apellidos": "Ortiz",
+      "pasaporte": "E952506",
+      "correo": "enortiz@scgg.gob.hn"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 11,
+    "fields": {
+      "nombres": "Maurice Claude",
+      "apellidos": "Bames",
+      "pasaporte": "A3924759",
+      "correo": "mbarnes@egovja.com"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 12,
+    "fields": {
+      "nombres": "Yolanda",
+      "apellidos": "Martínez Mancilla",
+      "pasaporte": "G14510268",
+      "correo": "ymartinez@funcionpublica.gob.mx"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 13,
+    "fields": {
+      "nombres": "Irvin",
+      "apellidos": "Halman",
+      "pasaporte": "06PD04636",
+      "correo": "ihalman@innovacion.gob.pa"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 14,
+    "fields": {
+        "nombres": "Jose Javier",
+        "apellidos": "Quiñonez Caceres",
+        "pasaporte": "M394980",
+        "correo": "javieq@gmail.com"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 15,
+    "fields": {
+        "nombres": "César",
+        "apellidos": "Vilchez",
+        "pasaporte": "6547144",
+        "correo": "cvilchez@pcm.gob.pe"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 16,
+    "fields": {
+        "nombres": "Armando",
+        "apellidos": "García",
+        "pasaporte": "101171213",
+        "correo": "armando.garcia@optic.gob.do"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 17,
+    "fields": {
+      "nombres": "Roel",
+      "apellidos": "Vonsee",
+      "pasaporte": "R1434970",
+      "correo": "roel.vonsee@president.gov.sr"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 18,
+    "fields": {
+      "nombres": "José",
+      "apellidos": "Clastornik",
+      "pasaporte": "C846155",
+      "correo": "jose.clastornik@agesic.gub.uy"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 19,
+    "fields": {
+      "nombres": "Roberto",
+      "apellidos": "Pedro",
+      "pasaporte": "López Bellomo",
+      "correo": "C690434"
+    }
+  },
+  {
+    "model": "participantes.participante",
+    "pk": 20,
+    "fields": {
+      "nombres": "Kenny Raúl",
+      "apellidos": "Ossa Múnera",
+      "pasaporte": "45931181",
+      "correo": "kossa@cnti.gob.ve"
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 1,
+    "fields": {
+      "fk_participante": 1,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 2,
+    "fields": {
+      "fk_participante": 2,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 3,
+    "fields": {
+      "fk_participante": 3,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 4,
+    "fields": {
+      "fk_participante": 4,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 5,
+    "fields": {
+      "fk_participante": 5,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 6,
+    "fields": {
+      "fk_participante": 6,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 7,
+    "fields": {
+      "fk_participante": 7,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 8,
+    "fields": {
+      "fk_participante": 8,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 9,
+    "fields": {
+      "fk_participante": 9,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 10,
+    "fields": {
+      "fk_participante": 10,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 11,
+    "fields": {
+      "fk_participante": 11,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 12,
+    "fields": {
+      "fk_participante": 12,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 13,
+    "fields": {
+      "fk_participante": 13,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 14,
+    "fields": {
+      "fk_participante": 14,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 15,
+    "fields": {
+      "fk_participante": 15,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 16,
+    "fields": {
+      "fk_participante": 16,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 17,
+    "fields": {
+      "fk_participante": 17,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 18,
+    "fields": {
+      "fk_participante": 18,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 19,
+    "fields": {
+      "fk_participante": 19,
+      "fk_evento": 1,
+      "firma": false
+    }
+  },
+  {
+    "model": "participantes.participanteevento",
+    "pk": 20,
+    "fields": {
+      "fk_participante": 20,
+      "fk_evento": 1,
+      "firma": false
+    }
+  }
+]
